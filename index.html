@@ -1,0 +1,4510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mastering the d- and f-Block Elements | Class 12 Chemistry</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="An interactive, gamified learning platform for Class 12 students to master transition and inner transition metals (d & f block elements) through labs, periodic tables, and games.">
+  <meta name="keywords" content="d block elements, f block elements, transition metals, lanthanoid contraction, oxidation states, class 12 chemistry, CBSE chemistry, interactive science games">
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* -------------------------------------------------------------
+       CSS VARIABLES & THEME SETUP
+       ------------------------------------------------------------- */
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: rgba(17, 24, 39, 0.7);
+      --bg-card-hover: rgba(31, 41, 55, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(6, 182, 212, 0.25);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      
+      --accent-d: #06b6d4;      /* Teal for d-block */
+      --accent-d-glow: rgba(6, 182, 212, 0.5);
+      --accent-f: #a855f7;      /* Purple for f-block */
+      --accent-f-glow: rgba(168, 85, 247, 0.5);
+      --accent-gold: #f59e0b;   /* Gold for special alerts/exceptions */
+      --accent-gold-glow: rgba(245, 158, 11, 0.5);
+      
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.3);
+      --error: #ef4444;
+      --error-glow: rgba(239, 68, 68, 0.3);
+      
+      --transition-speed: 0.3s;
+      --font-main: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    /* -------------------------------------------------------------
+       BASE STYLES & RESET
+       ------------------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    h1, h2, h3, h4 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* -------------------------------------------------------------
+       LAYOUT & SIDEBAR NAVIGATION
+       ------------------------------------------------------------- */
+    .app-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 280px;
+      background: rgba(10, 15, 26, 0.95);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      transition: transform var(--transition-speed);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--accent-d), var(--accent-f));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--accent-d-glow);
+      position: relative;
+    }
+
+    .brand-logo::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 6s linear infinite;
+    }
+
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .nav-item button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all var(--transition-speed) ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item button svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-muted);
+      transition: stroke var(--transition-speed);
+    }
+
+    .nav-item button:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+    }
+
+    .nav-item.active button {
+      background: rgba(6, 182, 212, 0.08);
+      color: var(--accent-d);
+      border-color: rgba(6, 182, 212, 0.2);
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.05);
+    }
+
+    .nav-item.active button svg {
+      stroke: var(--accent-d);
+    }
+
+    /* Specialty colors for F-block navigation point */
+    .nav-item.f-block-nav.active button {
+      background: rgba(168, 85, 247, 0.08);
+      color: var(--accent-f);
+      border-color: rgba(168, 85, 247, 0.2);
+    }
+    .nav-item.f-block-nav.active button svg {
+      stroke: var(--accent-f);
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sound-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .sound-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Main Content Wrapper */
+    .main-content {
+      margin-left: 280px;
+      flex-grow: 1;
+      padding: 40px;
+      min-height: 100vh;
+      transition: margin-left var(--transition-speed);
+    }
+
+    /* Mobile Hamburger Menu */
+    .mobile-header {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(10, 15, 26, 0.98);
+      border-bottom: 1px solid var(--border-color);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 110;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-toggle {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 6px;
+    }
+
+    .menu-toggle span {
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: all 0.3s;
+    }
+
+    /* -------------------------------------------------------------
+       GLOBAL VIEW AND CARD COMPONENT STYLES
+       ------------------------------------------------------------- */
+    .view-section {
+      display: none;
+      animation: fadeIn var(--transition-speed) ease forwards;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .badge-d {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--accent-d);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-f {
+      background: rgba(168, 85, 247, 0.1);
+      color: var(--accent-f);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    /* Common Button Design */
+    .btn {
+      background: linear-gradient(135deg, var(--accent-d), #0891b2);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: var(--font-main);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      box-shadow: none;
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 1: DASHBOARD VIEW
+       ------------------------------------------------------------- */
+    .hero-container {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .hero-text h2 {
+      font-size: 3rem;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, var(--accent-d), var(--accent-f));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      margin-bottom: 24px;
+    }
+
+    /* Cosmic Atomic Orbit Animation */
+    .orbit-visualizer {
+      width: 100%;
+      height: 300px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(17, 24, 39, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .atomic-nucleus {
+      width: 42px;
+      height: 42px;
+      background: radial-gradient(circle, var(--accent-gold) 0%, #d97706 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 30px var(--accent-gold-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+      color: #000;
+      z-index: 10;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      border: 1.5px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+    }
+
+    .orbit-ring.d-orbit-1 {
+      width: 140px;
+      height: 140px;
+      border-color: rgba(6, 182, 212, 0.3);
+      animation: orbitRotate 8s linear infinite;
+    }
+
+    .orbit-ring.d-orbit-2 {
+      width: 220px;
+      height: 120px;
+      border-color: rgba(168, 85, 247, 0.3);
+      transform: rotate(60deg);
+      animation: orbitRotate 12s linear infinite reverse;
+    }
+
+    .orbit-ring.d-orbit-3 {
+      width: 120px;
+      height: 220px;
+      border-color: rgba(245, 158, 11, 0.3);
+      transform: rotate(-45deg);
+      animation: orbitRotate 10s linear infinite;
+    }
+
+    .electron {
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      position: absolute;
+      box-shadow: 0 0 10px #fff;
+    }
+
+    .electron.el-1 {
+      top: -5px;
+      left: 50%;
+      background-color: var(--accent-d);
+      box-shadow: 0 0 12px var(--accent-d);
+    }
+
+    .electron.el-2 {
+      top: 50%;
+      left: -5px;
+      background-color: var(--accent-f);
+      box-shadow: 0 0 12px var(--accent-f);
+    }
+
+    .electron.el-3 {
+      bottom: -5px;
+      right: 50%;
+      background-color: var(--accent-gold);
+      box-shadow: 0 0 12px var(--accent-gold);
+    }
+
+    /* Core Concept Cards Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .concept-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .concept-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border-glow);
+      box-shadow: 0 10px 25px rgba(6, 182, 212, 0.05);
+    }
+
+    .concept-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(6, 182, 212, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .concept-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--accent-d);
+    }
+
+    .concept-card.f-style .concept-icon {
+      background: rgba(168, 85, 247, 0.1);
+    }
+    .concept-card.f-style .concept-icon svg {
+      stroke: var(--accent-f);
+    }
+
+    .concept-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .concept-card p {
+      font-size: 0.9rem;
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 2: PERIODIC TABLE VIEW
+       ------------------------------------------------------------- */
+    .periodic-table-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .pt-container {
+      overflow-x: auto;
+      padding: 10px 0;
+    }
+
+    .pt-table {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      min-width: 800px;
+    }
+
+    /* Group Labels Header */
+    .pt-header {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .pt-group-label {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .pt-row {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 8px;
+    }
+
+    /* Element Button/Block */
+    .pt-element {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      aspect-ratio: 1;
+      padding: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .pt-element:hover {
+      transform: scale(1.08);
+      z-index: 10;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .pt-element.d-block {
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+    .pt-element.d-block:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--accent-d);
+      box-shadow: 0 0 15px var(--accent-d-glow);
+    }
+
+    .pt-element.f-block {
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+    .pt-element.f-block:hover {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: var(--accent-f);
+      box-shadow: 0 0 15px var(--accent-f-glow);
+    }
+
+    .pt-element.selected {
+      background: linear-gradient(135deg, var(--accent-d), #0891b2) !important;
+      border-color: #fff !important;
+      color: #fff !important;
+      box-shadow: 0 0 20px var(--accent-d-glow) !important;
+    }
+
+    .pt-element.f-block.selected {
+      background: linear-gradient(135deg, var(--accent-f), #7e22ce) !important;
+      box-shadow: 0 0 20px var(--accent-f-glow) !important;
+    }
+
+    .pt-element-num {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .pt-element.selected .pt-element-num {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .pt-element-symbol {
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-align: center;
+      margin-top: -2px;
+    }
+
+    .pt-element-name {
+      font-size: 0.6rem;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: var(--text-muted);
+    }
+    .pt-element.selected .pt-element-name {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Periodic Table Separator for Inner Transition elements */
+    .pt-spacer {
+      height: 25px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pt-spacer::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    .f-block-label-container {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 15px;
+      align-items: center;
+      min-width: 800px;
+    }
+
+    .f-block-row-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-f);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pt-row-f {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      gap: 6px;
+      flex-grow: 1;
+    }
+
+    .pt-row-f .pt-element {
+      aspect-ratio: 1;
+      border-color: rgba(168, 85, 247, 0.25);
+    }
+
+    /* Element Inspector Sidebar */
+    .inspector-panel {
+      position: sticky;
+      top: 40px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .inspector-empty {
+      text-align: center;
+      padding: 40px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .inspector-empty svg {
+      width: 48px;
+      height: 48px;
+      stroke: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    .inspector-card {
+      display: none;
+      animation: fadeIn var(--transition-speed) ease forwards;
+    }
+
+    .inspector-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .inspector-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inspector-symbol-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent-d), #0891b2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 5px 15px var(--accent-d-glow);
+    }
+
+    .inspector-symbol-badge.f-style {
+      background: linear-gradient(135deg, var(--accent-f), #7e22ce);
+      box-shadow: 0 5px 15px var(--accent-f-glow);
+    }
+
+    .inspector-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .inspector-number {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .inspector-details {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 10px;
+    }
+
+    .detail-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .detail-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .detail-value.mono {
+      font-family: var(--font-mono);
+      color: #a5f3fc;
+    }
+
+    .detail-value.mono.f-style {
+      color: #f3e8ff;
+    }
+
+    .detail-ion-color {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 3: ORBITAL FILLER GAME
+       ------------------------------------------------------------- */
+    .game-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+    }
+
+    .orbital-workbench {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .orbital-target-box {
+      background: rgba(6, 182, 212, 0.05);
+      border: 1px solid rgba(6, 182, 212, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .orbital-target-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .orbital-target-formula {
+      font-family: var(--font-mono);
+      font-size: 1.3rem;
+      color: var(--accent-d);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+    }
+
+    /* Orbit Box Render Area */
+    .orbital-draw-area {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+      padding: 40px 10px;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+    }
+
+    .subshell-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+    }
+
+    .subshell-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .orbital-boxes {
+      display: flex;
+      gap: 12px;
+    }
+
+    .orbital-box {
+      width: 70px;
+      height: 70px;
+      border: 2px solid var(--border-color);
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 12px;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .orbital-box:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .orbital-box-label {
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 0.65rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Inside Orbital Box: Slots for Spin Up and Spin Down */
+    .spin-slot {
+      width: 50%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .spin-slot:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .spin-arrow {
+      font-size: 2rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.08);
+      transition: all 0.2s;
+      pointer-events: none;
+    }
+
+    /* Active States */
+    .spin-slot.active .spin-arrow {
+      color: var(--accent-d);
+      text-shadow: 0 0 10px var(--accent-d-glow);
+      transform: scale(1.1);
+    }
+
+    .orbital-box.violates-pauli {
+      border-color: var(--error);
+      box-shadow: 0 0 15px var(--error-glow);
+    }
+
+    .subshell-container.d-subshell .spin-slot.active .spin-arrow {
+      color: var(--accent-d);
+      text-shadow: 0 0 10px var(--accent-d-glow);
+    }
+    .subshell-container.s-subshell .spin-slot.active .spin-arrow {
+      color: var(--accent-gold);
+      text-shadow: 0 0 10px var(--accent-gold-glow);
+    }
+
+    .game-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    /* Game Selection Panel */
+    .game-select-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .game-score-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .score-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    .element-select-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .element-select-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px;
+      border-radius: 10px;
+      font-family: var(--font-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .element-select-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-d);
+    }
+
+    .element-select-btn.active {
+      background: rgba(6, 182, 212, 0.1);
+      border-color: var(--accent-d);
+      color: var(--accent-d);
+    }
+
+    .game-feedback {
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      display: none;
+      animation: fadeIn 0.3s;
+      line-height: 1.5;
+    }
+
+    .game-feedback.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .game-feedback.warning {
+      display: block;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+    }
+
+    .game-feedback.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 4: MAGNETIC CALCULATOR GAME
+       ------------------------------------------------------------- */
+    .mag-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
+    }
+
+    .mag-formula-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .math-formula {
+      font-size: 2rem;
+      font-family: var(--font-mono);
+      margin: 15px 0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .mag-workbench {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px 30px;
+    }
+
+    .mag-quest-header {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mag-ion-badge {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent-d);
+      background: rgba(6, 182, 212, 0.08);
+      border: 2px solid var(--accent-d);
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px var(--accent-d-glow);
+      margin: 20px 0;
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    .mag-ion-subtext {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 30px;
+      max-width: 500px;
+    }
+
+    .mag-steps-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    .mag-step-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 0.9rem;
+    }
+
+    .mag-step-item.active {
+      border-color: var(--accent-d);
+      background: rgba(6, 182, 212, 0.03);
+    }
+
+    .mag-step-label {
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .mag-step-item.active .mag-step-label {
+      color: var(--text-main);
+    }
+
+    .mag-step-value {
+      font-family: var(--font-mono);
+      font-weight: 700;
+    }
+
+    /* Calculator Input Controls */
+    .mag-input-section {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mag-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mag-input-group label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .mag-options-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .mag-opt-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 0;
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mag-opt-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-d);
+    }
+
+    .mag-opt-btn.selected {
+      background: var(--accent-d);
+      color: #000;
+      border-color: #fff;
+      box-shadow: 0 0 15px var(--accent-d-glow);
+    }
+
+    .mag-bm-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .mag-bm-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 12px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .mag-bm-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-f);
+    }
+
+    .mag-bm-btn.selected {
+      background: var(--accent-f);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 0 15px var(--accent-f-glow);
+    }
+
+    .mag-submit-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 15px;
+      justify-content: flex-end;
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 5: ALLOY & CATALYST LAB
+       ------------------------------------------------------------- */
+    .lab-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .lab-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-main);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .lab-tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .lab-tab-btn.active {
+      color: var(--accent-d);
+    }
+    .lab-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -13px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent-d);
+      box-shadow: 0 0 8px var(--accent-d-glow);
+    }
+
+    .lab-view {
+      display: none;
+      animation: fadeIn var(--transition-speed) ease forwards;
+    }
+
+    .lab-view.active {
+      display: block;
+    }
+
+    /* --- Alloy Lab Grid --- */
+    .alloy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .alloy-elements-shelf {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .shelf-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .shelf-elements {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .shelf-metal-item {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .shelf-metal-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-d);
+      box-shadow: 0 5px 15px rgba(6, 182, 212, 0.1);
+    }
+
+    .shelf-metal-sym {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .shelf-metal-name {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .shelf-metal-item::after {
+      content: '+';
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent-d);
+      opacity: 0.6;
+    }
+
+    /* Smelting Pot Furnace Area */
+    .alloy-furnace-area {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(15, 23, 42, 0.9) 0%, rgba(9, 13, 22, 0.95) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px;
+      min-height: 380px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fire/Heat effect when smelting */
+    .furnace-glow {
+      position: absolute;
+      bottom: -100px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s;
+      z-index: 1;
+    }
+
+    .furnace-glow.active {
+      opacity: 1;
+      animation: furnaceHeat 1.5s infinite alternate;
+    }
+
+    .crucible {
+      width: 140px;
+      height: 140px;
+      border: 6px solid #475569;
+      border-top: 15px solid #475569;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      background: rgba(15, 23, 42, 0.8);
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 -20px 40px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.5);
+      transition: border-color 0.5s;
+    }
+
+    .crucible.smelting {
+      border-color: #d97706;
+      border-top-color: #d97706;
+      box-shadow: inset 0 -20px 50px rgba(249, 115, 22, 0.8), 0 0 30px rgba(249, 115, 22, 0.4);
+      animation: shake 0.5s infinite;
+    }
+
+    .crucible-liquid {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(0deg, #ea580c, #f59e0b);
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      transition: height 0.5s ease;
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .crucible.filled .crucible-liquid {
+      height: 60%;
+    }
+    .crucible.smelting .crucible-liquid {
+      height: 80%;
+      background: linear-gradient(0deg, #f97316, #facc15);
+      animation: bubble 1s infinite alternate;
+    }
+
+    .crucible-contents-badge {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-width: 120px;
+      justify-content: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .crucible-metal-badge {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeIn 0.2s;
+    }
+
+    .furnace-controls {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .alloy-result-card {
+      background: rgba(245, 158, 11, 0.05);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+
+    /* --- Catalyst Lab Layout --- */
+    .catalyst-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 30px;
+    }
+
+    .cat-selector-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .reaction-option {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .reaction-option:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .reaction-option.active {
+      border-color: var(--accent-d);
+      background: rgba(6, 182, 212, 0.05);
+    }
+
+    .reaction-eq {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      margin-top: 8px;
+      color: var(--accent-d);
+      font-weight: 700;
+    }
+
+    .cat-workbench {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    /* Activation Energy graph canvas simulation */
+    .energy-graph-container {
+      width: 100%;
+      height: 200px;
+      background: rgba(10, 15, 26, 0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .graph-curve {
+      width: 100%;
+      height: 100%;
+      stroke: var(--accent-gold);
+      stroke-width: 3;
+      fill: none;
+      transition: d 0.8s ease-in-out;
+    }
+
+    .graph-curve.catalyzed {
+      stroke: var(--success);
+    }
+
+    .graph-label {
+      position: absolute;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Simulation molecules container */
+    .molecule-chamber {
+      width: 100%;
+      height: 160px;
+      background: rgba(10, 15, 26, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .molecule {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.05s linear;
+    }
+
+    .cat-shelf {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cat-shelf-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .catalyst-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .catalyst-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .catalyst-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent-d);
+    }
+
+    .catalyst-btn.active {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .cat-feedback-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* -------------------------------------------------------------
+       SECTION 6: LANTHANOID SLIDER
+       ------------------------------------------------------------- */
+    .lan-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+    }
+
+    .lan-visualizer {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    /* Dual Atomic Radial Comparison Panel */
+    .lan-atom-comparison {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      min-height: 220px;
+    }
+
+    .lan-atom-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .lan-circle-container {
+      width: 180px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .atom-radius-circle {
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, rgba(168, 85, 247, 0.05) 70%);
+      border: 2px solid var(--accent-f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: width 0.3s ease, height 0.3s ease, border-color 0.3s;
+      position: relative;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+    }
+
+    .atom-radius-circle::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent-gold);
+      z-index: 10;
+    }
+
+    .atom-core-charge {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+    }
+
+    .atom-node-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .atom-radius-metric {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: var(--accent-d);
+      font-weight: 700;
+    }
+
+    /* Lanthanoid Slider Controls */
+    .slider-container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      text-align: center;
+    }
+
+    .custom-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #1e293b;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .custom-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-f);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent-f-glow);
+      transition: transform 0.1s;
+    }
+
+    .custom-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5px;
+    }
+
+    .slider-tick {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .slider-tick.active {
+      color: var(--accent-f);
+      font-weight: 700;
+    }
+
+    /* Zirconium vs Hafnium Comparison Drawer */
+    .lan-compare-drawer {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .compare-btn-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .zr-hf-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      background: rgba(10, 15, 26, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .zr-hf-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .zr-hf-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .zr-hf-title.zr { color: var(--accent-d); }
+    .zr-hf-title.hf { color: var(--accent-f); }
+
+    /* -------------------------------------------------------------
+       SECTION 7: QUIZ QUEST VIEW
+       ------------------------------------------------------------- */
+    .quiz-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .quiz-progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+
+    .quiz-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(to right, var(--accent-d), var(--accent-f));
+      transition: width 0.3s ease;
+    }
+
+    .quiz-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .quiz-score-badge {
+      color: var(--accent-gold);
+    }
+
+    .quiz-question-box {
+      font-size: 1.3rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .quiz-option-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      font-family: var(--font-main);
+      font-size: 1rem;
+      text-align: left;
+      color: var(--text-main);
+      transition: all 0.2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quiz-option-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .quiz-option-item.selected {
+      border-color: var(--accent-d);
+      background: rgba(6, 182, 212, 0.06);
+    }
+
+    .quiz-option-item.correct {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.08);
+      color: #34d399;
+    }
+
+    .quiz-option-item.incorrect {
+      border-color: var(--error);
+      background: rgba(239, 68, 68, 0.08);
+      color: #fca5a5;
+    }
+
+    .quiz-feedback-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: none;
+      animation: fadeIn 0.3s;
+    }
+
+    .quiz-feedback-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .quiz-feedback-title.correct { color: var(--success); }
+    .quiz-feedback-title.incorrect { color: var(--error); }
+
+    .quiz-feedback-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .quiz-action-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Final Score Page */
+    .quiz-results-screen {
+      text-align: center;
+      padding: 40px 0;
+      display: none;
+      animation: scaleUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .results-shield {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 24px auto;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-gold), #b45309);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px var(--accent-gold-glow);
+    }
+
+    .results-shield svg {
+      width: 60px;
+      height: 60px;
+      fill: #fff;
+    }
+
+    .results-score {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .results-message {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    /* -------------------------------------------------------------
+       ANIMATIONS KEYFRAMES
+       ------------------------------------------------------------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scaleUp {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes orbitRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 15px rgba(6, 182, 212, 0.3); }
+      to { box-shadow: 0 0 30px rgba(6, 182, 212, 0.6); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1deg) translateY(-1px); }
+      75% { transform: rotate(-1deg) translateY(1px); }
+    }
+
+    @keyframes bubble {
+      from { opacity: 0.8; }
+      to { opacity: 1; filter: brightness(1.2); }
+    }
+
+    @keyframes furnaceHeat {
+      from { opacity: 0.2; transform: scale(0.9) translateY(10px); }
+      to { opacity: 0.8; transform: scale(1.1) translateY(0); }
+    }
+
+    /* -------------------------------------------------------------
+       RESPONSIVE DESIGN (TABLETS & PHONES)
+       ------------------------------------------------------------- */
+    @media (max-width: 1024px) {
+      .app-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        transform: translateX(-100%);
+        top: 64px;
+        height: calc(100vh - 64px);
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 100px 24px 40px 24px;
+      }
+
+      .mobile-header {
+        display: flex;
+      }
+
+      .periodic-table-layout, .game-grid, .mag-layout, .alloy-grid, .catalyst-layout, .lan-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .inspector-panel {
+        position: static;
+        margin-top: 30px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+      }
+      .orbit-visualizer {
+        height: 200px;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .lan-atom-comparison {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .pt-element-symbol {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MOBILE TOP BAR -->
+  <header class="mobile-header">
+    <div class="brand">
+      <div class="brand-logo"></div>
+      <span class="brand-name">OrbitalChem</span>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <div class="app-container">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <h1 class="brand-name">OrbitalChem d&f</h1>
+      </div>
+      
+      <nav class="nav-list">
+        <li class="nav-item active" data-target="dashboard">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+            Dashboard
+          </button>
+        </li>
+        <li class="nav-item" data-target="periodic-table">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+            d & f Periodic Map
+          </button>
+        </li>
+        <li class="nav-item" data-target="orbital-filler">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+            Orbital Filler
+          </button>
+        </li>
+        <li class="nav-item" data-target="magnetic-calc">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+            Magnetic Moment
+          </button>
+        </li>
+        <li class="nav-item" data-target="alloy-lab">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+            Alloy & Catalyst Lab
+          </button>
+        </li>
+        <li class="nav-item f-block-nav" data-target="lanthanoid-slider">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
+            f-Block contraction
+          </button>
+        </li>
+        <li class="nav-item" data-target="quiz-quest">
+          <button>
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+            Quiz Quest
+          </button>
+        </li>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="sound-toggle-btn" id="soundToggleBtn">
+          <span id="soundStatusText">🔈 Sound: ON</span>
+        </button>
+        <span>Designed for Class 12</span>
+        <span>© 2026 Antigravity Chem</span>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT VIEWPORTS -->
+    <main class="main-content">
+
+      <!-- VIEW 1: INTRO DASHBOARD -->
+      <section id="dashboard" class="view-section active">
+        <div class="hero-container">
+          <div class="hero-text">
+            <span class="badge-d">Overview Hub</span>
+            <h2 style="margin-top: 10px;">Mastering d & f Block Elements</h2>
+            <p>Welcome, Chemist! The transition metals (d-block) and inner transition metals (f-block) form the core of industrial chemistry, metallurgy, and advanced technology. Explore our interactive portals to learn electron configurations, magnetic moments, alloy forging, and lanthanoid contraction like a pro.</p>
+            <button class="btn" onclick="switchView('periodic-table')">
+              Start Exploring
+              <svg style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </button>
+          </div>
+          
+          <div class="orbit-visualizer">
+            <div class="atomic-nucleus">Z=26</div>
+            <div class="orbit-ring d-orbit-1">
+              <div class="electron el-1"></div>
+            </div>
+            <div class="orbit-ring d-orbit-2">
+              <div class="electron el-2"></div>
+            </div>
+            <div class="orbit-ring d-orbit-3">
+              <div class="electron el-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.5rem; margin-bottom: 20px;">Syllabus Focus Modules</h3>
+        <div class="dashboard-grid">
+          <div class="concept-card" onclick="switchView('periodic-table')">
+            <div class="concept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+            </div>
+            <h3>Interactive Periodic Map</h3>
+            <p>Dive deep into 3d, 4d, 5d, and f-block elements. View oxidation states, ion colors, and fun facts.</p>
+          </div>
+
+          <div class="concept-card" onclick="switchView('orbital-filler')">
+            <div class="concept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            </div>
+            <h3>Orbital Filler Game</h3>
+            <p>Master Aufbau, Hund, and Pauli. Solve exceptions like Chromium and Copper visually.</p>
+          </div>
+
+          <div class="concept-card" onclick="switchView('magnetic-calc')">
+            <div class="concept-icon font-mono">
+              <span style="color: var(--accent-d); font-weight: 800; font-size: 1.25rem;">&mu;</span>
+            </div>
+            <h3>Magnetic Moment calculator</h3>
+            <p>Learn spin-only magnetic moments (&radic;n(n+2)) and calculate unpaired d-electrons of common transition metal ions.</p>
+          </div>
+
+          <div class="concept-card" onclick="switchView('alloy-lab')">
+            <div class="concept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.334 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z" /></svg>
+            </div>
+            <h3>Alloy & Catalyst Lab</h3>
+            <p>Combine transition metals to forge high-tech alloys and simulate modern industrial catalysts.</p>
+          </div>
+
+          <div class="concept-card f-style" onclick="switchView('lanthanoid-slider')">
+            <div class="concept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <h3>Lanthanoid contraction</h3>
+            <p>Understand how atomic radii shrink through the 4f series and why Zr and Hf behave like chemical twins.</p>
+          </div>
+
+          <div class="concept-card" onclick="switchView('quiz-quest')">
+            <div class="concept-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <h3>Board Exam Quiz Quest</h3>
+            <p>Test your knowledge with 10 challenging board-style questions and unlock your Chemistry badge!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: PERIODIC TABLE VIEW -->
+      <section id="periodic-table" class="view-section">
+        <h2 class="section-title">d- and f-Block Elements</h2>
+        <p class="section-subtitle">Click on any element in the Periodic Table to inspect its configuration, valence states, ion colors, and technological applications.</p>
+        
+        <div class="periodic-table-layout">
+          <!-- Table Grid -->
+          <div class="glass-card" style="padding: 20px;">
+            <div class="pt-container">
+              <div class="pt-table">
+                <!-- Group Headers (3 to 12) -->
+                <div class="pt-header">
+                  <div class="pt-group-label">Gp 3</div>
+                  <div class="pt-group-label">Gp 4</div>
+                  <div class="pt-group-label">Gp 5</div>
+                  <div class="pt-group-label">Gp 6</div>
+                  <div class="pt-group-label">Gp 7</div>
+                  <div class="pt-group-label">Gp 8</div>
+                  <div class="pt-group-label">Gp 9</div>
+                  <div class="pt-group-label">Gp 10</div>
+                  <div class="pt-group-label">Gp 11</div>
+                  <div class="pt-group-label">Gp 12</div>
+                </div>
+
+                <!-- 3d series (Period 4) -->
+                <div class="pt-row" id="row-3d">
+                  <!-- JS populated -->
+                </div>
+
+                <!-- 4d series (Period 5) -->
+                <div class="pt-row" id="row-4d">
+                  <!-- JS populated -->
+                </div>
+
+                <!-- 5d series (Period 6) -->
+                <div class="pt-row" id="row-5d">
+                  <!-- JS populated -->
+                </div>
+
+                <div class="pt-spacer"></div>
+
+                <!-- Lanthanoids Row -->
+                <div class="f-block-label-container">
+                  <div class="f-block-row-label">Lanthanoids</div>
+                  <div class="pt-row-f" id="row-lan">
+                    <!-- JS populated -->
+                  </div>
+                </div>
+
+                <!-- Actinoids Row -->
+                <div class="f-block-label-container" style="margin-top: 10px;">
+                  <div class="f-block-row-label">Actinoids</div>
+                  <div class="pt-row-f" id="row-act">
+                    <!-- JS populated -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inspector Panel -->
+          <div class="inspector-panel">
+            <div class="inspector-empty" id="inspectorEmpty">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+              <h3>Inspector Standby</h3>
+              <p>Select any transition or inner transition element to view details.</p>
+            </div>
+            
+            <div class="inspector-card" id="inspectorCard">
+              <div class="inspector-header">
+                <div class="inspector-meta">
+                  <h3 class="inspector-name" id="insName">Iron</h3>
+                  <span class="inspector-number" id="insNumber">Z = 26 (Group 8)</span>
+                </div>
+                <div class="inspector-symbol-badge" id="insSymbolBadge">Fe</div>
+              </div>
+
+              <div class="inspector-details">
+                <div class="detail-item">
+                  <span class="detail-label">Electronic Configuration</span>
+                  <span class="detail-value mono" id="insConfig">[Ar] 3d⁶ 4s²</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Oxidation States</span>
+                  <span class="detail-value" id="insStates">+2, +3, +4, +6</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Aqueous Ion Color</span>
+                  <div class="detail-ion-color">
+                    <div class="color-swatch" id="insColorSwatch"></div>
+                    <span class="detail-value" id="insColorText">Fe²⁺: green, Fe³⁺: yellow</span>
+                  </div>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Real-World Fact</span>
+                  <p id="insFact" style="font-size: 0.85rem; margin-top: 4px;"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: ORBITAL FILLER GAME -->
+      <section id="orbital-filler" class="view-section">
+        <h2 class="section-title">Orbital Electron Filler Game</h2>
+        <p class="section-subtitle">Tactilely click slot boxes to fill electrons. Learn Aufbau principle, Hund's Rule, and exceptions of Chromium and Copper.</p>
+
+        <div class="game-grid">
+          <!-- Sandbox Workbench -->
+          <div class="orbital-workbench">
+            <div class="orbital-target-box">
+              <div>
+                <span class="detail-label">Active Challenge Element</span>
+                <div class="orbital-target-title" id="orbitalTargetName">Manganese (Mn)</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="detail-label">Goal Configuration</span>
+                <div class="orbital-target-formula" id="orbitalTargetConf">[Ar] 3d⁵ 4s²</div>
+              </div>
+            </div>
+
+            <!-- Draw Area -->
+            <div class="orbital-draw-area">
+              <!-- 4s subshell -->
+              <div class="subshell-container s-subshell">
+                <h4 class="subshell-title">4s Subshell</h4>
+                <div class="orbital-boxes">
+                  <div class="orbital-box" data-subshell="s" data-index="0">
+                    <div class="spin-slot" data-spin="up">
+                      <span class="spin-arrow">&uarr;</span>
+                    </div>
+                    <div class="spin-slot" data-spin="down">
+                      <span class="spin-arrow">&darr;</span>
+                    </div>
+                    <span class="orbital-box-label">4s</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3d subshell -->
+              <div class="subshell-container d-subshell">
+                <h4 class="subshell-title">3d Subshell</h4>
+                <div class="orbital-boxes" id="dOrbitalBoxes">
+                  <!-- 5 boxes -->
+                  <div class="orbital-box" data-subshell="d" data-index="0">
+                    <div class="spin-slot" data-spin="up"><span class="spin-arrow">&uarr;</span></div>
+                    <div class="spin-slot" data-spin="down"><span class="spin-arrow">&darr;</span></div>
+                    <span class="orbital-box-label">3d<sub>xy</sub></span>
+                  </div>
+                  <div class="orbital-box" data-subshell="d" data-index="1">
+                    <div class="spin-slot" data-spin="up"><span class="spin-arrow">&uarr;</span></div>
+                    <div class="spin-slot" data-spin="down"><span class="spin-arrow">&darr;</span></div>
+                    <span class="orbital-box-label">3d<sub>yz</sub></span>
+                  </div>
+                  <div class="orbital-box" data-subshell="d" data-index="2">
+                    <div class="spin-slot" data-spin="up"><span class="spin-arrow">&uarr;</span></div>
+                    <div class="spin-slot" data-spin="down"><span class="spin-arrow">&darr;</span></div>
+                    <span class="orbital-box-label">3d<sub>xz</sub></span>
+                  </div>
+                  <div class="orbital-box" data-subshell="d" data-index="3">
+                    <div class="spin-slot" data-spin="up"><span class="spin-arrow">&uarr;</span></div>
+                    <div class="spin-slot" data-spin="down"><span class="spin-arrow">&darr;</span></div>
+                    <span class="orbital-box-label">3d<sub>x²-y²</sub></span>
+                  </div>
+                  <div class="orbital-box" data-subshell="d" data-index="4">
+                    <div class="spin-slot" data-spin="up"><span class="spin-arrow">&uarr;</span></div>
+                    <div class="spin-slot" data-spin="down"><span class="spin-arrow">&darr;</span></div>
+                    <span class="orbital-box-label">3d<sub>z²</sub></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rules Feedback box -->
+              <div class="game-feedback" id="orbitalFeedback"></div>
+
+              <div class="game-controls">
+                <button class="btn btn-secondary" onclick="resetOrbitalGame()">Clear Board</button>
+                <button class="btn" onclick="checkOrbitalConfiguration()">Verify Configuration</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Selector panel / Score -->
+          <div class="game-select-panel">
+            <div class="game-score-card">
+              <span class="detail-label">Challenge Score</span>
+              <div class="score-value" id="orbitalScore">0</div>
+              <p style="font-size: 0.8rem; margin-top: 5px;">Configure elements correctly to increase score.</p>
+            </div>
+
+            <div class="glass-card" style="padding: 20px;">
+              <h3 style="font-size: 1rem; margin-bottom: 12px;">Choose Elements:</h3>
+              <div class="element-select-list" id="orbitalSelectElements">
+                <!-- Javascript populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: MAGNETIC CALCULATOR GAME -->
+      <section id="magnetic-calc" class="view-section">
+        <h2 class="section-title">Magnetic Moment Lab</h2>
+        <p class="section-subtitle">Calculate the number of unpaired electrons and compute the spin-only magnetic moment.</p>
+
+        <div class="mag-layout">
+          <!-- Active calculator -->
+          <div style="display: flex; flex-direction: column;">
+            <div class="mag-formula-box">
+              <span class="detail-label" style="color: var(--accent-gold);">Spin-Only Formula</span>
+              <div class="math-formula">&mu; = &radic;<span style="border-top: 1.5px solid #fff; padding-top: 2px;">n(n + 2)</span> BM</div>
+              <p style="font-size: 0.85rem; max-width: 500px; margin: 0 auto;">Where n is the number of unpaired d-electrons. Bohr Magneton (BM) is the unit of magnetic moment.</p>
+            </div>
+
+            <div class="mag-workbench">
+              <div class="mag-quest-header">Active Target Ion:</div>
+              <div class="mag-ion-badge" id="magIonText">Fe³⁺</div>
+              
+              <!-- Orbital visual representation of lost electrons -->
+              <div class="mag-steps-visual">
+                <div class="mag-step-item active">
+                  <span class="mag-step-label">1. Neutral Atom Config (Fe)</span>
+                  <span class="mag-step-value" id="magStep1">[Ar] 3d⁶ 4s²</span>
+                </div>
+                <div class="mag-step-item">
+                  <span class="mag-step-label">2. Electrons Removed (Fe³⁺)</span>
+                  <span class="mag-step-value" id="magStep2">2 from 4s, 1 from 3d</span>
+                </div>
+                <div class="mag-step-item">
+                  <span class="mag-step-label">3. Final Ion Configuration</span>
+                  <span class="mag-step-value" id="magStep3">[Ar] 3d⁵</span>
+                </div>
+              </div>
+
+              <!-- Input selectors -->
+              <div class="mag-input-section">
+                <div class="mag-input-group">
+                  <label>How many unpaired electrons (n)?</label>
+                  <div class="mag-options-grid" id="magUnpairedOptions">
+                    <button class="mag-opt-btn" onclick="selectUnpairedCount(0)">0</button>
+                    <button class="mag-opt-btn" onclick="selectUnpairedCount(1)">1</button>
+                    <button class="mag-opt-btn" onclick="selectUnpairedCount(2)">2</button>
+                    <button class="mag-opt-btn" onclick="selectUnpairedCount(3)">3</button>
+                    <button class="mag-opt-btn" onclick="selectUnpairedCount(4)">4</button>
+                    <button class="mag-opt-btn" onclick="selectUnpairedCount(5)">5</button>
+                  </div>
+                </div>
+
+                <div class="mag-input-group" style="margin-top: 10px;">
+                  <label>Spin-only magnetic moment (&mu;) in BM?</label>
+                  <div class="mag-bm-grid" id="magBMOptions">
+                    <button class="mag-bm-btn" onclick="selectBMValue(0.00)">0.00 BM</button>
+                    <button class="mag-bm-btn" onclick="selectBMValue(1.73)">1.73 BM</button>
+                    <button class="mag-bm-btn" onclick="selectBMValue(2.84)">2.84 BM</button>
+                    <button class="mag-bm-btn" onclick="selectBMValue(3.87)">3.87 BM</button>
+                    <button class="mag-bm-btn" onclick="selectBMValue(4.90)">4.90 BM</button>
+                    <button class="mag-bm-btn" onclick="selectBMValue(5.92)">5.92 BM</button>
+                  </div>
+                </div>
+
+                <div class="game-feedback" id="magFeedback"></div>
+
+                <div class="mag-submit-row">
+                  <button class="btn btn-secondary" onclick="revealMagneticHint()">Hint</button>
+                  <button class="btn" onclick="submitMagneticAnswer()">Verify Answer</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Score Card / Next Level list -->
+          <div class="game-select-panel">
+            <div class="game-score-card">
+              <span class="detail-label">Moment Score</span>
+              <div class="score-value" id="magScore">0</div>
+              <p style="font-size: 0.8rem; margin-top: 5px;">Solve transition ions to increase score.</p>
+            </div>
+
+            <div class="glass-card" style="padding: 20px;">
+              <h3 style="font-size: 1rem; margin-bottom: 12px;">Try Another Ion:</h3>
+              <div class="element-select-list" id="magSelectIons">
+                <!-- JS populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: ALLOY & CATALYST LAB -->
+      <section id="alloy-lab" class="view-section">
+        <h2 class="section-title">Alloy & Catalyst Lab</h2>
+        <p class="section-subtitle">Interact with transition metals to forge high-tech alloys or simulate catalyst properties in chemical engineering.</p>
+
+        <div class="lab-tabs">
+          <button class="lab-tab-btn active" onclick="switchLabTab('alloy')">Alloy Smelting Workbench</button>
+          <button class="lab-tab-btn" onclick="switchLabTab('catalyst')">Catalytic Reaction Chamber</button>
+        </div>
+
+        <!-- LAB VIEW A: ALLOY SMELTER -->
+        <div class="lab-view active" id="labViewAlloy">
+          <div class="alloy-grid">
+            <div class="alloy-elements-shelf">
+              <h3 class="shelf-title">Metal Element Store</h3>
+              <p style="margin-bottom: 20px; font-size: 0.9rem;">Click on transition elements to add them into the crucible smelting pot.</p>
+              
+              <div class="shelf-elements">
+                <div class="shelf-metal-item" onclick="addToCrucible('Fe')">
+                  <span class="shelf-metal-sym">Fe</span>
+                  <span class="shelf-metal-name">Iron</span>
+                </div>
+                <div class="shelf-metal-item" onclick="addToCrucible('Cr')">
+                  <span class="shelf-metal-sym">Cr</span>
+                  <span class="shelf-metal-name">Chromium</span>
+                </div>
+                <div class="shelf-metal-item" onclick="addToCrucible('Ni')">
+                  <span class="shelf-metal-sym">Ni</span>
+                  <span class="shelf-metal-name">Nickel</span>
+                </div>
+                <div class="shelf-metal-item" onclick="addToCrucible('Cu')">
+                  <span class="shelf-metal-sym">Cu</span>
+                  <span class="shelf-metal-name">Copper</span>
+                </div>
+                <div class="shelf-metal-item" onclick="addToCrucible('Zn')">
+                  <span class="shelf-metal-sym">Zn</span>
+                  <span class="shelf-metal-name">Zinc</span>
+                </div>
+                <div class="shelf-metal-item" onclick="addToCrucible('Sn')">
+                  <span class="shelf-metal-sym">Sn</span>
+                  <span class="shelf-metal-name">Tin</span>
+                </div>
+                <div class="shelf-metal-item" onclick="addToCrucible('Co')">
+                  <span class="shelf-metal-sym">Co</span>
+                  <span class="shelf-metal-name">Cobalt</span>
+                </div>
+                <div class="shelf-metal-item" style="border-color: rgba(245, 158, 11, 0.2);" onclick="addToCrucible('C')">
+                  <span class="shelf-metal-sym" style="color: var(--accent-gold);">C</span>
+                  <span class="shelf-metal-name">Carbon</span>
+                </div>
+              </div>
+
+              <!-- Interstitial Structure Info box -->
+              <div class="glass-card" style="margin-top: 30px; margin-bottom: 0; padding: 20px;">
+                <h4 style="margin-bottom: 8px; font-size: 1rem; color: var(--accent-d);">Why do transition metals form alloys?</h4>
+                <p style="font-size: 0.85rem;">Because transition metals have similar atomic sizes (radii), atoms of one metal can easily slide into and occupy positions in the crystal lattice of another metal. This produces extremely strong alloys with high melting points and corrosion resistance.</p>
+              </div>
+            </div>
+
+            <!-- Crucible Smelting Output -->
+            <div class="alloy-furnace-area">
+              <div class="furnace-glow" id="furnaceGlow"></div>
+              
+              <div class="crucible" id="smeltingCrucible">
+                <div class="crucible-liquid"></div>
+                <div class="crucible-contents-badge" id="crucibleContents">
+                  <!-- Added metals go here -->
+                </div>
+              </div>
+
+              <div class="furnace-controls">
+                <button class="btn btn-secondary" onclick="clearCrucible()">Dump Crucible</button>
+                <button class="btn" onclick="smeltAlloy()">Forge / Fuse</button>
+              </div>
+
+              <!-- Result card -->
+              <div class="alloy-result-card" id="alloyResultCard">
+                <h3 style="color: var(--accent-gold); margin-bottom: 8px;" id="alloyResultTitle">Stainless Steel</h3>
+                <p style="font-size: 0.9rem;" id="alloyResultDesc">Created by smelting Iron, Chromium, Nickel, and Carbon. Resistive to rusting and used for knives and medical tools.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LAB VIEW B: CATALYTIC SIMULATION -->
+        <div class="lab-view" id="labViewCatalyst">
+          <div class="catalyst-layout">
+            <!-- Left panel: Reaction select -->
+            <div class="cat-selector-panel">
+              <h3 class="shelf-title" style="margin-bottom: 12px;">Select Reaction</h3>
+              
+              <div class="reaction-option active" data-reaction="haber" onclick="selectReaction('haber')">
+                <h4 style="font-size: 0.95rem;">Haber's Process</h4>
+                <p style="font-size: 0.8rem;">Ammonia synthesis for agricultural fertilizers.</p>
+                <div class="reaction-eq">N₂ + 3H₂ &rightleftharpoons; 2NH₃</div>
+              </div>
+
+              <div class="reaction-option" data-reaction="contact" onclick="selectReaction('contact')">
+                <h4 style="font-size: 0.95rem;">Contact Process</h4>
+                <p style="font-size: 0.8rem;">Sulfur trioxide synthesis for sulfuric acid.</p>
+                <div class="reaction-eq">2SO₂ + O₂ &rightleftharpoons; 2SO₃</div>
+              </div>
+
+              <div class="reaction-option" data-reaction="hydrogenation" onclick="selectReaction('hydrogenation')">
+                <h4 style="font-size: 0.95rem;">Hydrogenation of Oils</h4>
+                <p style="font-size: 0.8rem;">Converting liquid vegetable oils into solid fats.</p>
+                <div class="reaction-eq">R-CH=CH-R + H₂ &rarr; R-CH₂-CH₂-R</div>
+              </div>
+            </div>
+
+            <!-- Right panel: Simulator Workbench -->
+            <div class="cat-workbench">
+              <h3 id="catWorkbenchTitle" style="font-size: 1.2rem;">Haber's Process Catalytic Chamber</h3>
+
+              <!-- Activation energy graph (canvas simulation) -->
+              <div class="energy-graph-container">
+                <svg width="100%" height="100%" viewBox="0 0 400 200" preserveAspectRatio="none">
+                  <path d="M 10 170 Q 150 10, 390 170" class="graph-curve" id="graphCurve" />
+                  <line x1="10" y1="170" x2="390" y2="170" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" />
+                </svg>
+                <span class="graph-label" style="top: 10px; left: 10px;">Potential Energy</span>
+                <span class="graph-label" style="bottom: 10px; right: 10px;">Reaction Path</span>
+                <span class="graph-label" id="activationLabel" style="top: 40px; left: 180px; color: var(--accent-gold);">Activation Energy (Ea)</span>
+              </div>
+
+              <!-- Speed particle box -->
+              <div class="molecule-chamber" id="moleculeChamber">
+                <!-- JS moves particles here -->
+              </div>
+
+              <!-- Catalyst shelf -->
+              <div class="cat-shelf">
+                <span class="cat-shelf-label">Choose Catalyst:</span>
+                <div class="catalyst-buttons">
+                  <button class="catalyst-btn" onclick="applyCatalyst('Fe')">Iron (Fe)</button>
+                  <button class="catalyst-btn" onclick="applyCatalyst('V2O5')">V₂O₅</button>
+                  <button class="catalyst-btn" onclick="applyCatalyst('Ni')">Nickel (Ni)</button>
+                  <button class="catalyst-btn" onclick="applyCatalyst('none')">None (No Catalyst)</button>
+                </div>
+              </div>
+
+              <!-- Explanatory feedback -->
+              <div class="cat-feedback-card" id="catFeedback">
+                Reaction running slowly without catalyst. Select a catalyst from the shelf to speed it up!
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 6: LANTHANOID SLIDER VIEW -->
+      <section id="lanthanoid-slider" class="view-section">
+        <h2 class="section-title">Lanthanoid Contraction</h2>
+        <p class="section-subtitle">Visual demonstration of the progressive decrease in atomic size across the Lanthanoid series and its effects.</p>
+
+        <div class="lan-layout">
+          <!-- Visual Node -->
+          <div class="lan-visualizer">
+            <h3 style="font-size: 1.2rem; text-align: center;">Atomic Radius Simulation</h3>
+            
+            <div class="lan-atom-comparison">
+              <!-- Interactive Atom -->
+              <div class="lan-atom-node">
+                <div class="lan-circle-container">
+                  <div class="atom-radius-circle" id="lanAtomCircle">
+                    <span class="atom-core-charge" id="lanCoreCharge">+57</span>
+                  </div>
+                </div>
+                <span class="atom-node-label" id="lanNodeLabel">Lanthanum (La)</span>
+                <span class="atom-radius-metric" id="lanRadiusMetric">187 pm</span>
+              </div>
+
+              <!-- Standard comparison reference (Lutetium) -->
+              <div class="lan-atom-node" style="opacity: 0.6;">
+                <div class="lan-circle-container">
+                  <div class="atom-radius-circle" style="width: 153px; height: 153px; border-color: rgba(255, 255, 255, 0.2);">
+                    <span class="atom-core-charge">+71</span>
+                  </div>
+                </div>
+                <span class="atom-node-label">Lutetium (Lu)</span>
+                <span class="atom-radius-metric">173 pm</span>
+              </div>
+            </div>
+
+            <!-- Slider controls -->
+            <div class="slider-container">
+              <label for="lanSlider" style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Slide across Lanthanoid elements (Z = 57 to 71)</label>
+              <input type="range" min="57" max="71" value="57" class="custom-slider" id="lanSlider">
+              
+              <div class="slider-ticks">
+                <span class="slider-tick active" id="tick-57">La</span>
+                <span class="slider-tick" id="tick-58">Ce</span>
+                <span class="slider-tick" id="tick-60">Nd</span>
+                <span class="slider-tick" id="tick-63">Eu</span>
+                <span class="slider-tick" id="tick-64">Gd</span>
+                <span class="slider-tick" id="tick-67">Ho</span>
+                <span class="slider-tick" id="tick-71">Lu</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explanation and Zr/Hf Drawer -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="glass-card" style="padding: 24px; margin-bottom: 0;">
+              <h3 style="font-size: 1.15rem; margin-bottom: 12px; color: var(--accent-f);">What is Lanthanoid Contraction?</h3>
+              <p style="font-size: 0.9rem; margin-bottom: 14px;">As atomic number increases from 57 to 71, the nuclear charge increases by +1 at each step, and electrons are added to the 4f subshell.</p>
+              <p style="font-size: 0.9rem; font-weight: 600; color: var(--accent-gold);">Crucial Fact: The shielding effect of 4f electrons is extremely poor due to their highly diffused shapes.</p>
+              <p style="font-size: 0.9rem; margin-top: 14px;">As a result, the outer 6s electrons experience a stronger effective nuclear charge, pulling them closer to the nucleus. This causes the atomic and ionic sizes to contract steadily.</p>
+            </div>
+
+            <!-- Zirconium vs Hafnium Twin comparison -->
+            <div class="lan-compare-drawer">
+              <h4 style="font-size: 1rem;">Consequence: Chemical Twins</h4>
+              <p style="font-size: 0.85rem;">Due to Lanthanoid contraction, elements of the 4d series (Period 5) and 5d series (Period 6) have almost identical atomic radii. Let's compare Zr (Z=40) and Hf (Z=72):</p>
+              
+              <div class="zr-hf-card">
+                <div class="zr-hf-item">
+                  <span class="zr-hf-title zr">Zr (Z=40)</span>
+                  <span class="detail-label">Radius</span>
+                  <span class="atom-radius-metric">160 pm</span>
+                </div>
+                <div class="zr-hf-item">
+                  <span class="zr-hf-title hf">Hf (Z=72)</span>
+                  <span class="detail-label">Radius</span>
+                  <span class="atom-radius-metric">159 pm</span>
+                </div>
+              </div>
+              <p style="font-size: 0.8rem; text-align: center; color: var(--text-muted);">Despite Hafnium having an extra shell, they have identical sizes! This makes them extremely difficult to separate chemically.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 7: QUIZ QUEST VIEW -->
+      <section id="quiz-quest" class="view-section">
+        <h2 class="section-title">Board Exam Quiz Quest</h2>
+        <p class="section-subtitle">Challenge yourself with 10 high-yield Board Exam questions. Get detailed explanations and earn your badge.</p>
+
+        <div class="quiz-container">
+          <div class="glass-card" style="padding: 30px;">
+            <!-- Quiz Active Screen -->
+            <div id="quizActiveBox">
+              <div class="quiz-progress-bar">
+                <div class="quiz-progress-fill" id="quizProgressFill"></div>
+              </div>
+
+              <div class="quiz-meta-row">
+                <span>Question <span id="quizCurrentNum">1</span> of 10</span>
+                <span class="quiz-score-badge">Points: <span id="quizCurrentPoints">0</span></span>
+              </div>
+
+              <div class="quiz-question-box" id="quizQuestionText">
+                Loading question...
+              </div>
+
+              <div class="quiz-options-list" id="quizOptionsList">
+                <!-- Javascript populated options -->
+              </div>
+
+              <div class="quiz-feedback-box" id="quizFeedbackBox">
+                <div class="quiz-feedback-title" id="quizFeedbackTitle">Correct!</div>
+                <p class="quiz-feedback-text" id="quizFeedbackText">Explanation goes here.</p>
+              </div>
+
+              <div class="quiz-action-row">
+                <button class="btn" id="quizNextBtn" onclick="nextQuizQuestion()" style="display: none;">Next Question</button>
+              </div>
+            </div>
+
+            <!-- Quiz Results Screen -->
+            <div class="quiz-results-screen" id="quizResultsScreen">
+              <div class="results-shield">
+                <svg viewBox="0 0 24 24" style="width: 60px; height: 60px; fill:#fff;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+              </div>
+              <h3 style="font-size: 2rem; margin-bottom: 8px;">Course Complete!</h3>
+              <div class="results-score" id="resultsScoreText">80 / 100</div>
+              <div class="results-message" id="resultsMessageText">Great job! You have a strong grasp of the d- and f-block chemistry.</div>
+              <button class="btn" onclick="restartQuiz()">Try Again</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- -------------------------------------------------------------
+       JAVASCRIPT LOGIC & DATABASE
+       ------------------------------------------------------------- -->
+  <script>
+    /* -------------------------------------------------------------
+       1. DATA DEFINITIONS FOR D- & F-BLOCKS
+       ------------------------------------------------------------- */
+    const elementsData = {
+      Sc: { name: "Scandium", num: 21, group: 3, period: 4, block: "d", conf: "[Ar] 3d¹ 4s²", states: "+3", stableStates: "+3", color: "Sc³⁺: Colorless (d⁰)", fact: "First transition metal. Used in aerospace components and high-intensity lights." },
+      Ti: { name: "Titanium", num: 22, group: 4, period: 4, block: "d", conf: "[Ar] 3d² 4s²", states: "+2, +3, +4", stableStates: "+4", color: "Ti³⁺: Purple, Ti⁴⁺: Colorless (d⁰)", fact: "As strong as steel but 45% lighter. Heavily used in aerospace and medical implants." },
+      V: { name: "Vanadium", num: 23, group: 5, period: 4, block: "d", conf: "[Ar] 3d³ 4s²", states: "+2, +3, +4, +5", stableStates: "+4, +5", color: "V²⁺: Violet, V³⁺: Green, VO²⁺: Blue, VO₂⁺: Yellow", fact: "Added to steel to create vanadium steel, which is incredibly tough and used in armor plating." },
+      Cr: { name: "Chromium", num: 24, group: 6, period: 4, block: "d", conf: "[Ar] 3d⁵ 4s¹", states: "+2, +3, +6", stableStates: "+3, +6", color: "Cr³⁺: Green, Cr₂O₇²⁻: Orange, CrO₄²⁻: Yellow", fact: "Exceptional configuration! Gives rubies their red color and makes stainless steel shiny and rust-proof." },
+      Mn: { name: "Manganese", num: 25, group: 7, period: 4, block: "d", conf: "[Ar] 3d⁵ 4s²", states: "+2, +3, +4, +5, +6, +7", stableStates: "+2, +4, +7", color: "Mn²⁺: Pink, MnO₄²⁻: Green, MnO₄⁻: Purple", fact: "Exhibits the maximum number of oxidation states (+2 to +7) in the 3d series." },
+      Fe: { name: "Iron", num: 26, group: 8, period: 4, block: "d", conf: "[Ar] 3d⁶ 4s²", states: "+2, +3, +4, +6", stableStates: "+2, +3", color: "Fe²⁺: Pale Green, Fe³⁺: Yellow/Brown", fact: "The most common element on Earth by mass. Vital for transporting oxygen in human blood (hemoglobin)." },
+      Co: { name: "Cobalt", num: 27, group: 9, period: 4, block: "d", conf: "[Ar] 3d⁷ 4s²", states: "+2, +3, +4", stableStates: "+2, +3", color: "Co²⁺: Pink/Blue", fact: "Used in superalloys for jet engines and permanent magnets (Alnico)." },
+      Ni: { name: "Nickel", num: 28, group: 10, period: 4, block: "d", conf: "[Ar] 3d⁸ 4s²", states: "+2, +3, +4", stableStates: "+2", color: "Ni²⁺: Bright Green", fact: "Resists corrosion. Used widely in rechargeable batteries, coins, and electroplating." },
+      Cu: { name: "Copper", num: 29, group: 11, period: 4, block: "d", conf: "[Ar] 3d¹⁰ 4s¹", states: "+1, +2", stableStates: "+2", color: "Cu⁺: Colorless (d¹⁰), Cu²⁺: Blue", fact: "Exceptional configuration! The first metal ever smelted by humans. Outstanding conductor of electricity." },
+      Zn: { name: "Zinc", num: 30, group: 12, period: 4, block: "d", conf: "[Ar] 3d¹⁰ 4s²", states: "+2", stableStates: "+2", color: "Zn²⁺: Colorless (d¹⁰)", fact: "Not strictly a transition element because it has a fully filled d-subshell in ground and common ion states. Used for galvanizing iron." },
+      
+      Y: { name: "Yttrium", num: 39, group: 3, period: 5, block: "d", conf: "[Kr] 4d¹ 5s²", states: "+3", stableStates: "+3", color: "Y³⁺: Colorless", fact: "Used in camera lenses and superconducting materials." },
+      Zr: { name: "Zirconium", num: 40, group: 4, period: 5, block: "d", conf: "[Kr] 4d² 5s²", states: "+4", stableStates: "+4", color: "Zr⁴⁺: Colorless", fact: "Has a very similar atomic radius (160 pm) to Hafnium (159 pm) due to Lanthanoid Contraction." },
+      Nb: { name: "Niobium", num: 41, group: 5, period: 5, block: "d", conf: "[Kr] 4d⁴ 5s¹", states: "+3, +5", stableStates: "+5", color: "Nb⁵⁺: Colorless", fact: "Used in superconducting alloys and jet engines." },
+      Mo: { name: "Molybdenum", num: 42, group: 6, period: 5, block: "d", conf: "[Kr] 4d⁵ 5s¹", states: "+2, +3, +4, +5, +6", stableStates: "+4, +6", color: "Mo⁶⁺: Yellowish", fact: "Vital cofactor in nitrogenase enzymes, enabling biological nitrogen fixation." },
+      Tc: { name: "Technetium", num: 43, group: 7, period: 5, block: "d", conf: "[Kr] 4d⁵ 5s²", states: "+4, +7", stableStates: "+7", color: "TcO₄⁻: Colorless", fact: "First artificially produced element. Highly radioactive; its isotope Tc-99m is widely used in medical imaging." },
+      Ru: { name: "Ruthenium", num: 44, group: 8, period: 5, block: "d", conf: "[Kr] 4d⁷ 5s¹", states: "+3, +4", stableStates: "+3, +4", color: "Ru³⁺: Brownish-red", fact: "Used in electrical contacts and solar cell dyes." },
+      Rh: { name: "Rhodium", num: 45, group: 9, period: 5, block: "d", conf: "[Kr] 4d⁸ 5s¹", states: "+3", stableStates: "+3", color: "Rh³⁺: Red", fact: "Extremely rare and precious metal. Used in catalytic converters and jewelry plating." },
+      Pd: { name: "Palladium", num: 46, group: 10, period: 5, block: "d", conf: "[Kr] 4d¹⁰", states: "+2, +4", stableStates: "+2", color: "Pd²⁺: Brown", fact: "Unique configuration with zero 5s electrons! Absorbs up to 900 times its own volume of hydrogen gas." },
+      Ag: { name: "Silver", num: 47, group: 11, period: 5, block: "d", conf: "[Kr] 4d¹⁰ 5s¹", states: "+1", stableStates: "+1", color: "Ag⁺: Colorless", fact: "Possesses the highest electrical and thermal conductivity of any metal." },
+      Cd: { name: "Cadmium", num: 48, group: 12, period: 5, block: "d", conf: "[Kr] 4d¹⁰ 5s²", states: "+2", stableStates: "+2", color: "Cd²⁺: Colorless", fact: "Used in nickel-cadmium batteries and control rods in nuclear reactors." },
+
+      La: { name: "Lanthanum", num: 57, group: 3, period: 6, block: "d", conf: "[Xe] 5d¹ 6s²", states: "+3", stableStates: "+3", color: "La³⁺: Colorless", fact: "The prototype element of the lanthanoid series, though technically a d-block transition element." },
+      Hf: { name: "Hafnium", num: 72, group: 4, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d² 6s²", states: "+4", stableStates: "+4", color: "Hf⁴⁺: Colorless", fact: "Almost identical chemical properties to Zirconium. Excellent neutron absorber, used in nuclear reactor control rods." },
+      Ta: { name: "Tantalum", num: 73, group: 5, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d³ 6s²", states: "+5", stableStates: "+5", color: "Ta⁵⁺: Colorless", fact: "Highly corrosion-resistant. Used to make capacitors in electronic devices like cell phones." },
+      W: { name: "Tungsten", num: 74, group: 6, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d⁴ 6s²", states: "+2, +3, +4, +5, +6", stableStates: "+6", color: "W⁶⁺: Light Yellow", fact: "Has the highest melting point of all elements (3422 °C). Used in lamp filaments and heavy armor." },
+      Re: { name: "Rhenium", num: 75, group: 7, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d⁵ 6s²", states: "+4, +7", stableStates: "+7", color: "ReO₄⁻: Colorless", fact: "One of the rarest elements in Earth's crust. Used in nickel-based superalloys for jet engines." },
+      Os: { name: "Osmium", num: 76, group: 8, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d⁶ 6s²", states: "+3, +4, +8", stableStates: "+4, +8", color: "OsO₄: Colorless, volatile, toxic", fact: "The densest naturally occurring element. Osmium tetroxide (OsO4) is a powerful oxidizing agent used in biological staining." },
+      Ir: { name: "Iridium", num: 77, group: 9, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d⁷ 6s²", states: "+3, +4", stableStates: "+4", color: "Ir⁴⁺: Yellowish-brown", fact: "The most corrosion-resistant metal. A layer of iridium-rich clay marks the boundary of the dinosaur extinction event." },
+      Pt: { name: "Platinum", num: 78, group: 10, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d⁹ 6s¹", states: "+2, +4", stableStates: "+2, +4", color: "Pt²⁺: Brownish-red", fact: "Highly unreactive precious metal. Widely used as a catalyst in laboratory and industrial chemical processes." },
+      Au: { name: "Gold", num: 79, group: 11, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d¹⁰ 6s¹", states: "+1, +3", stableStates: "+3", color: "Au³⁺: Yellow", fact: "Extremely ductile and malleable. Chemically inert, prized for currency and electronics." },
+      Hg: { name: "Mercury", num: 80, group: 12, period: 6, block: "d", conf: "[Xe] 4f¹⁴ 5d¹⁰ 6s²", states: "+1, +2", stableStates: "+2", color: "Hg²⁺: Colorless", fact: "The only metallic element that is liquid at standard temperature and pressure. Extremely toxic." },
+
+      // Lanthanoids
+      Ce: { name: "Cerium", num: 58, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹ 5d¹ 6s²", states: "+3, +4", stableStates: "+3, +4", color: "Ce³⁺: Colorless, Ce⁴⁺: Yellow-orange", fact: "The most abundant lanthanoid. Ce(IV) is a well-known analytical oxidizing agent." },
+      Pr: { name: "Praseodymium", num: 59, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f³ 6s²", states: "+3, +4", stableStates: "+3", color: "Pr³⁺: Green", fact: "Used in high-strength magnets and searchlight carbon arcs." },
+      Nd: { name: "Neodymium", num: 60, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f⁴ 6s²", states: "+3", stableStates: "+3", color: "Nd³⁺: Lilac/Red", fact: "With iron and boron, it makes the strongest permanent magnets known (Neodymium magnets)." },
+      Pm: { name: "Promethium", num: 61, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f⁵ 6s²", states: "+3", stableStates: "+3", color: "Pm³⁺: Pink", fact: "The only radioactive lanthanoid. Synthetic, glows in the dark and is used in nuclear batteries." },
+      Sm: { name: "Samarium", num: 62, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f⁶ 6s²", states: "+2, +3", stableStates: "+3", color: "Sm³⁺: Yellow", fact: "Used in Samarium-Cobalt magnets, which resist demagnetization at high temperatures." },
+      Eu: { name: "Europium", num: 63, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f⁷ 6s²", states: "+2, +3", stableStates: "+3", color: "Eu³⁺: Pink/Red, Eu²⁺: Colorless", fact: "Excellent phosphor. Red phosphors in color CRT, LCD, and LED displays are europium-based." },
+      Gd: { name: "Gadolinium", num: 64, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f⁷ 5d¹ 6s²", states: "+3", stableStates: "+3", color: "Gd³⁺: Colorless", fact: "Has a high neutron capture cross-section. Its complexes are used as contrast agents in MRI scans." },
+      Tb: { name: "Terbium", num: 65, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f⁹ 6s²", states: "+3, +4", stableStates: "+3", color: "Tb³⁺: Pale Pink (fluoresces green)", fact: "Used in green phosphors and Terfenol-D (a material that expands and contracts in magnetic fields)." },
+      Dy: { name: "Dysprosium", num: 66, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹⁰ 6s²", states: "+3", stableStates: "+3", color: "Dy³⁺: Pale Yellow", fact: "Has high magnetic susceptibility, used in hard disks and wind turbine generators." },
+      Ho: { name: "Holmium", num: 67, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹¹ 6s²", states: "+3", stableStates: "+3", color: "Ho³⁺: Yellow/Pinkish", fact: "Has the highest magnetic strength of any element. Used in high-power magnets." },
+      Er: { name: "Erbium", num: 68, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹² 6s²", states: "+3", stableStates: "+3", color: "Er³⁺: Pink", fact: "Its ions emit light at 1.54 microns, the exact wavelength used in optical fiber telecommunications." },
+      Tm: { name: "Thulium", num: 69, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹³ 6s²", states: "+3", stableStates: "+3", color: "Tm³⁺: Pale Green", fact: "The rarest stable lanthanoid. Used as a radiation source in portable X-ray devices." },
+      Yb: { name: "Ytterbium", num: 70, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹⁴ 6s²", states: "+2, +3", stableStates: "+3", color: "Yb³⁺: Colorless", fact: "Used in fiber-optic amplifiers and laser systems." },
+      Lu: { name: "Lutetium", num: 71, group: "f-row1", period: 6, block: "f", conf: "[Xe] 4f¹⁴ 5d¹ 6s²", states: "+3", stableStates: "+3", color: "Lu³⁺: Colorless", fact: "The hardest and densest lanthanoid. Used in cancer therapy and PET scans." },
+
+      // Actinoids
+      Th: { name: "Thorium", num: 90, group: "f-row2", period: 7, block: "f", conf: "[Rn] 6d² 7s²", states: "+3, +4", stableStates: "+4", color: "Th⁴⁺: Colorless", fact: "A potential cleaner alternative fuel to uranium for nuclear power reactors." },
+      Pa: { name: "Protactinium", num: 91, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f² 6d¹ 7s²", states: "+3, +4, +5", stableStates: "+5", color: "Pa⁴⁺: Greenish, Pa⁵⁺: Colorless", fact: "Extremely toxic and highly radioactive metal, intermediate product of thorium decay." },
+      U: { name: "Uranium", num: 92, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f³ 6d¹ 7s²", states: "+3, +4, +5, +6", stableStates: "+6", color: "U³⁺: Red, U⁴⁺: Green, UO₂²⁺: Yellow-green", fact: "The heaviest naturally occurring element. Chief fuel for nuclear reactors and weapons." },
+      Np: { name: "Neptunium", num: 93, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f⁴ 6d¹ 7s²", states: "+3, +4, +5, +6, +7", stableStates: "+5", color: "Np³⁺: Purple, Np⁴⁺: Yellow-green, Np⁵⁺: Green", fact: "The first transuranium element created synthetically. Created by bombarding uranium-238 with neutrons." },
+      Pu: { name: "Plutonium", num: 94, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f⁶ 7s²", states: "+3, +4, +5, +6, +7", stableStates: "+4", color: "Pu³⁺: Blue-violet, Pu⁴⁺: Yellow-brown, Pu⁶⁺: Pink", fact: "Highly radioactive and fissile. Used in nuclear reactors (MOX fuel) and deep space probes." },
+      Am: { name: "Americium", num: 95, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f⁷ 7s²", states: "+3, +4, +5, +6", stableStates: "+3", color: "Am³⁺: Pink, Am⁴⁺: Pink-red", fact: "Used in household ionization smoke detectors." },
+      Cm: { name: "Curium", num: 96, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f⁷ 6d¹ 7s²", states: "+3, +4", stableStates: "+3", color: "Cm³⁺: Colorless (fluoresces yellow)", fact: "Named after Marie and Pierre Curie. Used as an alpha particle source on space missions (e.g. Mars rovers)." },
+      Bk: { name: "Berkelium", num: 97, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f⁹ 7s²", states: "+3, +4", stableStates: "+3", color: "Bk³⁺: Yellow-green, Bk⁴⁺: Yellow", fact: "Synthesized at UC Berkeley. Used primarily in research for studying transuranic elements." },
+      Cf: { name: "Californium", num: 98, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f¹0 7s²", states: "+2, +3, +4", stableStates: "+3", color: "Cf³⁺: Green", fact: "A strong neutron emitter. Used to start nuclear reactors and in cancer therapy." },
+      Es: { name: "Einsteinium", num: 99, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f¹¹ 7s²", states: "+2, +3", stableStates: "+3", color: "Es³⁺: Pale Pink", fact: "Named after Albert Einstein. Discovered in the debris of the first hydrogen bomb test in 1952." },
+      Fm: { name: "Fermium", num: 100, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f¹² 7s²", states: "+2, +3", stableStates: "+3", color: "Fm³⁺: Colorless", fact: "Named after Enrico Fermi. The heaviest element that can be formed by neutron bombardment of lighter elements." },
+      Md: { name: "Mendelevium", num: 101, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f¹³ 7s²", states: "+2, +3", stableStates: "+3", color: "Md³⁺: Colorless", fact: "Named after Dmitri Mendeleev. The first element that could not be produced in bulk quantities." },
+      No: { name: "Nobelium", num: 102, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f¹⁴ 7s²", states: "+2, +3", stableStates: "+2", color: "No²⁺: Colorless", fact: "Named after Alfred Nobel. Its +2 state is unusually stable in aqueous solution." },
+      Lr: { name: "Lawrencium", num: 103, group: "f-row2", period: 7, block: "f", conf: "[Rn] 5f¹⁴ 6d¹ 7s²", states: "+3", stableStates: "+3", color: "Lr³⁺: Colorless", fact: "Named after Ernest Lawrence. The final element of the actinoid series." }
+    };
+
+    /* -------------------------------------------------------------
+       2. AUDIO SYNTHESIS ENGINE (WEB AUDIO API)
+       ------------------------------------------------------------- */
+    let soundEnabled = true;
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playTone(freq, type, duration) {
+      if (!soundEnabled) return;
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      try {
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn("Web Audio failed", e);
+      }
+    }
+
+    function playSelectSound() {
+      playTone(600, 'sine', 0.1);
+    }
+    function playSuccessSound() {
+      playTone(523.25, 'triangle', 0.15); // C5
+      setTimeout(() => playTone(659.25, 'triangle', 0.15), 100); // E5
+      setTimeout(() => playTone(783.99, 'triangle', 0.25), 200); // G5
+    }
+    function playErrorSound() {
+      playTone(150, 'sawtooth', 0.35);
+    }
+
+    // Toggle Sound
+    document.getElementById('soundToggleBtn').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundStatusText').innerText = soundEnabled ? '🔈 Sound: ON' : '🔇 Sound: OFF';
+      playSelectSound();
+    });
+
+    /* -------------------------------------------------------------
+       3. NAVIGATION & ROUTING
+       ------------------------------------------------------------- */
+    function switchView(targetId) {
+      playSelectSound();
+      
+      // Close sidebar on mobile
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('menuToggle').classList.remove('active');
+
+      // Swap active sections
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(targetId).classList.add('active');
+
+      // Update Nav Buttons
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        if (btn.getAttribute('data-target') === targetId) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      // Trigger tab-specific entry functions
+      if (targetId === 'periodic-table') {
+        const firstEl = document.querySelector('.pt-element');
+        if (firstEl && !document.querySelector('.pt-element.selected')) {
+          firstEl.click();
+        }
+      } else if (targetId === 'alloy-lab' && activeLabTab === 'catalyst') {
+        startCatalystParticles();
+      }
+    }
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        switchView(item.getAttribute('data-target'));
+      });
+    });
+
+    // Mobile Hamburger Menu Trigger
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      sidebar.classList.toggle('open');
+      playSelectSound();
+    });
+
+    /* -------------------------------------------------------------
+       4. PERIODIC TABLE EXPLORER LOGIC
+       ------------------------------------------------------------- */
+    function renderPeriodicTable() {
+      const row3d = document.getElementById('row-3d');
+      const row4d = document.getElementById('row-4d');
+      const row5d = document.getElementById('row-5d');
+      const rowLan = document.getElementById('row-lan');
+      const rowAct = document.getElementById('row-act');
+
+      row3d.innerHTML = '';
+      row4d.innerHTML = '';
+      row5d.innerHTML = '';
+      rowLan.innerHTML = '';
+      rowAct.innerHTML = '';
+
+      Object.keys(elementsData).forEach(symbol => {
+        const data = elementsData[symbol];
+        const blockClass = data.block === 'd' ? 'd-block' : 'f-block';
+        
+        const elDiv = document.createElement('div');
+        elDiv.className = `pt-element ${blockClass}`;
+        elDiv.id = `pt-el-${symbol}`;
+        elDiv.innerHTML = `
+          <span class="pt-element-num">${data.num}</span>
+          <span class="pt-element-symbol">${symbol}</span>
+          <span class="pt-element-name">${data.name}</span>
+        `;
+
+        elDiv.addEventListener('click', () => selectElementInTable(symbol));
+
+        // Group into rows
+        if (data.period === 4 && data.block === 'd') {
+          row3d.appendChild(elDiv);
+        } else if (data.period === 5 && data.block === 'd') {
+          row4d.appendChild(elDiv);
+        } else if (data.period === 6 && data.block === 'd') {
+          row5d.appendChild(elDiv);
+        } else if (data.group === 'f-row1') {
+          rowLan.appendChild(elDiv);
+        } else if (data.group === 'f-row2') {
+          rowAct.appendChild(elDiv);
+        }
+      });
+    }
+
+    function selectElementInTable(symbol) {
+      playSelectSound();
+      document.querySelectorAll('.pt-element').forEach(el => el.classList.remove('selected'));
+      
+      const elDiv = document.getElementById(`pt-el-${symbol}`);
+      if (elDiv) elDiv.classList.add('selected');
+
+      const data = elementsData[symbol];
+      
+      // Update Inspector Drawer
+      document.getElementById('inspectorEmpty').style.display = 'none';
+      const card = document.getElementById('inspectorCard');
+      card.style.display = 'block';
+
+      document.getElementById('insName').innerText = data.name;
+      document.getElementById('insNumber').innerText = `Z = ${data.num} (${data.block.toUpperCase()}-block)`;
+      
+      const badge = document.getElementById('insSymbolBadge');
+      badge.innerText = symbol;
+      if (data.block === 'f') {
+        badge.classList.add('f-style');
+      } else {
+        badge.classList.remove('f-style');
+      }
+
+      const confVal = document.getElementById('insConfig');
+      confVal.innerText = data.conf;
+      if (data.block === 'f') {
+        confVal.classList.add('f-style');
+      } else {
+        confVal.classList.remove('f-style');
+      }
+
+      document.getElementById('insStates').innerText = data.states;
+      document.getElementById('insColorText').innerText = data.color;
+      document.getElementById('insFact').innerText = data.fact;
+
+      // Extract color swatch
+      const swatch = document.getElementById('insColorSwatch');
+      const ionColor = data.color.toLowerCase();
+      
+      if (ionColor.includes('colorless')) {
+        swatch.style.backgroundColor = 'transparent';
+        swatch.style.border = '2px dashed rgba(255,255,255,0.3)';
+      } else {
+        swatch.style.border = '1px solid rgba(255,255,255,0.2)';
+        if (ionColor.includes('blue')) swatch.style.backgroundColor = '#2563eb';
+        else if (ionColor.includes('green')) swatch.style.backgroundColor = '#16a34a';
+        else if (ionColor.includes('purple') || ionColor.includes('violet')) swatch.style.backgroundColor = '#9333ea';
+        else if (ionColor.includes('pink')) swatch.style.backgroundColor = '#f472b6';
+        else if (ionColor.includes('yellow') || ionColor.includes('brown')) swatch.style.backgroundColor = '#b45309';
+        else if (ionColor.includes('orange')) swatch.style.backgroundColor = '#ea580c';
+        else swatch.style.backgroundColor = '#475569';
+      }
+    }
+
+    /* -------------------------------------------------------------
+       5. GAME 1: ORBITAL ELECTRON FILLER
+       ------------------------------------------------------------- */
+    let orbitalActiveElement = 'Mn';
+    let orbitalScore = 0;
+
+    let userOrbitalState = {
+      s: [{ up: false, down: false }],
+      d: [
+        { up: false, down: false },
+        { up: false, down: false },
+        { up: false, down: false },
+        { up: false, down: false },
+        { up: false, down: false }
+      ]
+    };
+
+    const orbitalChallenges = ['Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn'];
+
+    function setupOrbitalGame() {
+      const listDiv = document.getElementById('orbitalSelectElements');
+      listDiv.innerHTML = '';
+
+      orbitalChallenges.forEach(symbol => {
+        const btn = document.createElement('button');
+        btn.className = `element-select-btn ${symbol === orbitalActiveElement ? 'active' : ''}`;
+        btn.id = `orbital-sel-${symbol}`;
+        btn.innerHTML = `
+          <span>${elementsData[symbol].name}</span>
+          <span class="mono">${symbol}</span>
+        `;
+        btn.onclick = () => selectOrbitalElement(symbol);
+        listDiv.appendChild(btn);
+      });
+
+      // Set up click handlers on spin slots
+      document.querySelectorAll('.orbital-box').forEach(box => {
+        const subshell = box.getAttribute('data-subshell');
+        const boxIdx = parseInt(box.getAttribute('data-index'));
+
+        box.querySelectorAll('.spin-slot').forEach(slot => {
+          const spin = slot.getAttribute('data-spin');
+          slot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleElectronSpin(subshell, boxIdx, spin);
+          });
+        });
+      });
+
+      loadOrbitalChallenge(orbitalActiveElement);
+    }
+
+    function selectOrbitalElement(symbol) {
+      playSelectSound();
+      orbitalActiveElement = symbol;
+      document.querySelectorAll('.element-select-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`orbital-sel-${symbol}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      loadOrbitalChallenge(symbol);
+    }
+
+    function loadOrbitalChallenge(symbol) {
+      const data = elementsData[symbol];
+      document.getElementById('orbitalTargetName').innerText = `${data.name} (${symbol})`;
+      document.getElementById('orbitalTargetConf').innerText = data.conf;
+      
+      resetOrbitalBoard();
+      
+      const feedback = document.getElementById('orbitalFeedback');
+      feedback.style.display = 'none';
+    }
+
+    function resetOrbitalBoard() {
+      userOrbitalState.s[0] = { up: false, down: false };
+      for (let i = 0; i < 5; i++) {
+        userOrbitalState.d[i] = { up: false, down: false };
+      }
+      renderOrbitalState();
+    }
+
+    function resetOrbitalGame() {
+      playSelectSound();
+      resetOrbitalBoard();
+    }
+
+    function toggleElectronSpin(subshell, index, spin) {
+      playSelectSound();
+      const current = userOrbitalState[subshell][index][spin];
+      userOrbitalState[subshell][index][spin] = !current;
+      renderOrbitalState();
+    }
+
+    function renderOrbitalState() {
+      const sBox = document.querySelector('.s-subshell .orbital-box');
+      updateBoxSlots(sBox, userOrbitalState.s[0]);
+
+      const dBoxes = document.querySelectorAll('.d-subshell .orbital-box');
+      dBoxes.forEach((box, i) => {
+        updateBoxSlots(box, userOrbitalState.d[i]);
+      });
+    }
+
+    function updateBoxSlots(boxElement, stateObj) {
+      const upSlot = boxElement.querySelector('[data-spin="up"]');
+      const downSlot = boxElement.querySelector('[data-spin="down"]');
+
+      if (stateObj.up) upSlot.classList.add('active');
+      else upSlot.classList.remove('active');
+
+      if (stateObj.down) downSlot.classList.add('active');
+      else downSlot.classList.remove('active');
+    }
+
+    function countTotalElectrons() {
+      let count = 0;
+      if (userOrbitalState.s[0].up) count++;
+      if (userOrbitalState.s[0].down) count++;
+      for(let i=0; i<5; i++) {
+        if (userOrbitalState.d[i].up) count++;
+        if (userOrbitalState.d[i].down) count++;
+      }
+      return count;
+    }
+
+    function checkOrbitalConfiguration() {
+      const feedback = document.getElementById('orbitalFeedback');
+      feedback.className = 'game-feedback';
+      
+      let targetD = 0;
+      let targetS = 2;
+
+      switch(orbitalActiveElement) {
+        case 'Sc': targetD = 1; break;
+        case 'Ti': targetD = 2; break;
+        case 'V':  targetD = 3; break;
+        case 'Cr': targetD = 5; targetS = 1; break; // Exception
+        case 'Mn': targetD = 5; break;
+        case 'Fe': targetD = 6; break;
+        case 'Co': targetD = 7; break;
+        case 'Ni': targetD = 8; break;
+        case 'Cu': targetD = 10; targetS = 1; break; // Exception
+        case 'Zn': targetD = 10; break;
+      }
+
+      let sUp = userOrbitalState.s[0].up ? 1 : 0;
+      let sDown = userOrbitalState.s[0].down ? 1 : 0;
+      let userS = sUp + sDown;
+
+      let userD = 0;
+      let dUpCount = 0;
+      let dDownCount = 0;
+
+      for (let i = 0; i < 5; i++) {
+        let box = userOrbitalState.d[i];
+        if (box.up) { userD++; dUpCount++; }
+        if (box.down) { userD++; dDownCount++; }
+      }
+
+      const total = countTotalElectrons();
+      const expectedTotal = targetD + targetS;
+      if (total !== expectedTotal) {
+        playErrorSound();
+        feedback.classList.add('error');
+        feedback.innerText = `Electron Count Mismatch! You placed ${total} valence electrons. But ${orbitalActiveElement} requires exactly ${expectedTotal} valence electrons (${targetD} in 3d and ${targetS} in 4s).`;
+        return;
+      }
+
+      // Exceptions
+      if (orbitalActiveElement === 'Cr' && userS === 2 && userD === 4) {
+        playErrorSound();
+        feedback.classList.add('warning');
+        feedback.innerHTML = `<strong>Aufbau rule exception!</strong> You filled 4s with 2 and 3d with 4. While this follows the standard order, Chromium ($Cr$) has a more stable state of <strong>$3d^5 4s^1$</strong>. Symmetrical distribution and high exchange energy of a half-filled 3d shell provide exceptional stability!`;
+        return;
+      }
+
+      if (orbitalActiveElement === 'Cu' && userS === 2 && userD === 9) {
+        playErrorSound();
+        feedback.classList.add('warning');
+        feedback.innerHTML = `<strong>Aufbau rule exception!</strong> You filled 4s with 2 and 3d with 9. However, Copper ($Cu$) possesses an exceptional configuration of <strong>$3d^{10} 4s^1$</strong>. Fully-filled d-orbitals have symmetrical configurations and maximum exchange energy, making them extremely stable!`;
+        return;
+      }
+
+      // Hund's Rule checking
+      let hasDownSpin = dDownCount > 0;
+      let hasEmptyBoxes = false;
+      for (let i = 0; i < 5; i++) {
+        let box = userOrbitalState.d[i];
+        if (!box.up && !box.down) {
+          hasEmptyBoxes = true;
+        }
+      }
+
+      if (hasDownSpin && hasEmptyBoxes) {
+        playErrorSound();
+        feedback.classList.add('error');
+        feedback.innerHTML = `<strong>Hund's Rule Violation!</strong> You paired electrons in some 3d orbitals while other 3d orbitals are completely empty. Electrons must occupy all degenerate (equal energy) orbitals singly with parallel spins before they begin to pair!`;
+        return;
+      }
+
+      // Correct check
+      if (userS === targetS && userD === targetD) {
+        playSuccessSound();
+        feedback.classList.add('success');
+        feedback.innerHTML = `<strong>Success!</strong> Configuration correct for ${elementsData[orbitalActiveElement].name} ($Z=${elementsData[orbitalActiveElement].num}$). Valence config is successfully set to <strong>${targetData.conf}</strong>!`;
+        
+        orbitalScore += 10;
+        document.getElementById('orbitalScore').innerText = orbitalScore;
+      } else {
+        playErrorSound();
+        feedback.classList.add('error');
+        feedback.innerText = `Incorrect Orbital Division! Your placement doesn't match the energy rules. Ensure 4s and 3d subshells contain correct counts.`;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       6. GAME 2: MAGNETIC CALCULATOR GAME
+       ------------------------------------------------------------- */
+    let magActiveIon = 'Fe3+';
+    let magScore = 0;
+    let magSelectedUnpaired = null;
+    let magSelectedBM = null;
+
+    const magIons = {
+      'Sc3+': { neutral: '[Ar] 3d¹ 4s²', action: '3 electrons lost (2 from 4s, 1 from 3d)', final: '[Ar] 3d⁰', unpaired: 0, bm: 0.00, hint: 'Sc³⁺ loses all valence electrons, leaving it with the stable neon-like Argon configuration. No unpaired electrons.' },
+      'Ti3+': { neutral: '[Ar] 3d² 4s²', action: '3 electrons lost (2 from 4s, 1 from 3d)', final: '[Ar] 3d¹', unpaired: 1, bm: 1.73, hint: 'Ti³⁺ has a 3d¹ configuration, leaving exactly one lone electron.' },
+      'V3+':  { neutral: '[Ar] 3d³ 4s²', action: '3 electrons lost (2 from 4s, 1 from 3d)', final: '[Ar] 3d²', unpaired: 2, bm: 2.84, hint: 'V³⁺ has a 3d² configuration. By Hund\'s rule, these sit in separate orbitals, meaning 2 unpaired electrons.' },
+      'Cr3+': { neutral: '[Ar] 3d⁵ 4s¹', action: '3 electrons lost (1 from 4s, 2 from 3d)', final: '[Ar] 3d³', unpaired: 3, bm: 3.87, hint: 'Cr³⁺ has a 3d³ configuration, resulting in 3 unpaired electrons.' },
+      'Mn2+': { neutral: '[Ar] 3d⁵ 4s²', action: '2 electrons lost (2 from 4s)', final: '[Ar] 3d⁵', unpaired: 5, bm: 5.92, hint: 'Mn²⁺ has a half-filled 3d⁵ shell. All five electrons sit singly, so 5 unpaired electrons.' },
+      'Fe2+': { neutral: '[Ar] 3d⁶ 4s²', action: '2 electrons lost (2 from 4s)', final: '[Ar] 3d⁶', unpaired: 4, bm: 4.90, hint: 'Fe²⁺ has a 3d⁶ shell. One orbital gets paired (2 electrons), leaving 4 orbitals with single electrons.' },
+      'Fe3+': { neutral: '[Ar] 3d⁶ 4s²', action: '3 electrons lost (2 from 4s, 1 from 3d)', final: '[Ar] 3d⁵', unpaired: 5, bm: 5.92, hint: 'Fe³⁺ has a 3d⁵ configuration. Similar to Mn²⁺, all 5 orbitals have one electron each.' },
+      'Co2+': { neutral: '[Ar] 3d⁷ 4s²', action: '2 electrons lost (2 from 4s)', final: '[Ar] 3d⁷', unpaired: 3, bm: 3.87, hint: 'Co²⁺ is 3d⁷. Five up electrons, and two down electrons. This leaves 3 unpaired electrons.' },
+      'Ni2+': { neutral: '[Ar] 3d⁸ 4s²', action: '2 electrons lost (2 from 4s)', final: '[Ar] 3d⁸', unpaired: 2, bm: 2.84, hint: 'Ni²⁺ is 3d⁸. Five up, three down. Leaves 2 unpaired electrons.' },
+      'Cu2+': { neutral: '[Ar] 3d¹⁰ 4s¹', action: '2 electrons lost (1 from 4s, 1 from 3d)', final: '[Ar] 3d⁹', unpaired: 1, bm: 1.73, hint: 'Cu²⁺ has a 3d⁹ configuration. Almost full, but has exactly 1 unpaired electron.' },
+      'Zn2+': { neutral: '[Ar] 3d¹⁰ 4s²', action: '2 electrons lost (2 from 4s)', final: '[Ar] 3d¹⁰', unpaired: 0, bm: 0.00, hint: 'Zn²⁺ has a completely full 3d¹⁰ shell. No unpaired electrons.' }
+    };
+
+    function setupMagneticGame() {
+      const listDiv = document.getElementById('magSelectIons');
+      listDiv.innerHTML = '';
+
+      Object.keys(magIons).forEach(ion => {
+        const btn = document.createElement('button');
+        btn.className = `element-select-btn ${ion === magActiveIon ? 'active' : ''}`;
+        btn.id = `mag-sel-${ion.replace('+', '')}`;
+        btn.innerHTML = `
+          <span>Ion State</span>
+          <span class="mono">${ion}</span>
+        `;
+        btn.onclick = () => selectMagneticIon(ion);
+        listDiv.appendChild(btn);
+      });
+
+      loadMagneticChallenge(magActiveIon);
+    }
+
+    function selectMagneticIon(ion) {
+      playSelectSound();
+      magActiveIon = ion;
+      document.querySelectorAll('#magSelectIons .element-select-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`mag-sel-${ion.replace('+', '')}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      loadMagneticChallenge(ion);
+    }
+
+    function loadMagneticChallenge(ion) {
+      const data = magIons[ion];
+      document.getElementById('magIonText').innerText = ion;
+      document.getElementById('magStep1').innerText = data.neutral;
+      document.getElementById('magStep2').innerText = data.action;
+      document.getElementById('magStep3').innerText = data.final;
+
+      magSelectedUnpaired = null;
+      magSelectedBM = null;
+      
+      document.querySelectorAll('#magUnpairedOptions .mag-opt-btn').forEach(btn => btn.classList.remove('selected'));
+      document.querySelectorAll('#magBMOptions .mag-bm-btn').forEach(btn => btn.classList.remove('selected'));
+
+      const feedback = document.getElementById('magFeedback');
+      feedback.style.display = 'none';
+    }
+
+    function selectUnpairedCount(num) {
+      playSelectSound();
+      magSelectedUnpaired = num;
+      document.querySelectorAll('#magUnpairedOptions .mag-opt-btn').forEach(btn => btn.classList.remove('selected'));
+      event.target.classList.add('selected');
+    }
+
+    function selectBMValue(val) {
+      playSelectSound();
+      magSelectedBM = val;
+      document.querySelectorAll('#magBMOptions .mag-bm-btn').forEach(btn => btn.classList.remove('selected'));
+      event.target.classList.add('selected');
+    }
+
+    function revealMagneticHint() {
+      playSelectSound();
+      const feedback = document.getElementById('magFeedback');
+      feedback.className = 'game-feedback warning';
+      feedback.innerHTML = `<strong>Hint:</strong> ${magIons[magActiveIon].hint}`;
+    }
+
+    function submitMagneticAnswer() {
+      const feedback = document.getElementById('magFeedback');
+      feedback.className = 'game-feedback';
+
+      if (magSelectedUnpaired === null || magSelectedBM === null) {
+        playErrorSound();
+        feedback.classList.add('error');
+        feedback.innerText = "Please select BOTH the number of unpaired electrons (n) and the magnetic moment (BM) value.";
+        return;
+      }
+
+      const target = magIons[magActiveIon];
+      
+      if (magSelectedUnpaired === target.unpaired && Math.abs(magSelectedBM - target.bm) < 0.05) {
+        playSuccessSound();
+        feedback.classList.add('success');
+        feedback.innerHTML = `<strong>Correct!</strong> For ${magActiveIon}, $n = ${target.unpaired}$ unpaired electrons. $\\mu = \\sqrt{${target.unpaired}(${target.unpaired}+2)} = \\sqrt{${target.unpaired * (target.unpaired + 2)}} \\approx ${target.bm}$ Bohr Magnetons (BM).`;
+        
+        magScore += 15;
+        document.getElementById('magScore').innerText = magScore;
+      } else {
+        playErrorSound();
+        feedback.classList.add('error');
+        feedback.innerHTML = `<strong>Incorrect!</strong> Your values do not match ${magActiveIon}. Check the configuration and apply $\\mu = \\sqrt{n(n+2)}$ again!`;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       7. GAME 3: ALLOY & CATALYST LAB
+       ------------------------------------------------------------- */
+    let activeLabTab = 'alloy';
+    let crucibleContents = [];
+
+    function switchLabTab(tab) {
+      playSelectSound();
+      activeLabTab = tab;
+      document.querySelectorAll('.lab-tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.lab-view').forEach(view => view.classList.remove('active'));
+
+      if (tab === 'alloy') {
+        event.target.classList.add('active');
+        document.getElementById('labViewAlloy').classList.add('active');
+      } else {
+        event.target.classList.add('active');
+        document.getElementById('labViewCatalyst').classList.add('active');
+        startCatalystParticles();
+      }
+    }
+
+    function addToCrucible(metal) {
+      playSelectSound();
+      if (crucibleContents.includes(metal)) return;
+      
+      crucibleContents.push(metal);
+      
+      const crucibleEl = document.getElementById('smeltingCrucible');
+      crucibleEl.classList.add('filled');
+
+      renderCrucibleContents();
+    }
+
+    function renderCrucibleContents() {
+      const container = document.getElementById('crucibleContents');
+      container.innerHTML = '';
+      crucibleContents.forEach(metal => {
+        const span = document.createElement('span');
+        span.className = 'crucible-metal-badge';
+        span.innerText = metal;
+        container.appendChild(span);
+      });
+    }
+
+    function clearCrucible() {
+      playSelectSound();
+      crucibleContents = [];
+      const crucibleEl = document.getElementById('smeltingCrucible');
+      crucibleEl.classList.remove('filled');
+      crucibleEl.classList.remove('smelting');
+      
+      document.getElementById('furnaceGlow').classList.remove('active');
+      document.getElementById('alloyResultCard').style.display = 'none';
+      renderCrucibleContents();
+    }
+
+    function matchRecipe(recipe) {
+      if (crucibleContents.length !== recipe.length) return false;
+      return recipe.every(metal => crucibleContents.includes(metal));
+    }
+
+    function smeltAlloy() {
+      if (crucibleContents.length === 0) {
+        playErrorSound();
+        return;
+      }
+      
+      playSelectSound();
+      const crucibleEl = document.getElementById('smeltingCrucible');
+      const glow = document.getElementById('furnaceGlow');
+      const resultCard = document.getElementById('alloyResultCard');
+
+      crucibleEl.classList.add('smelting');
+      glow.classList.add('active');
+      resultCard.style.display = 'none';
+
+      setTimeout(() => {
+        crucibleEl.classList.remove('smelting');
+        glow.classList.remove('active');
+        
+        let alloyName = "Slag / Sludge (Scrap)";
+        let alloyDesc = "Your combination resulted in brittle, useless scrap metal. Clean out the crucible and try these classic recipes: Brass (Copper + Zinc), Bronze (Copper + Tin), or Stainless Steel (Iron + Chromium + Nickel + Carbon).";
+        let isSuccess = false;
+
+        if (matchRecipe(['Cu', 'Zn'])) {
+          alloyName = "Brass";
+          alloyDesc = "A highly malleable alloy composed of Copper and Zinc. Resistant to corrosion and acoustic-friendly. Used in musical instruments, locks, and cartridge casings.";
+          isSuccess = true;
+        } else if (matchRecipe(['Cu', 'Sn'])) {
+          alloyName = "Bronze";
+          alloyDesc = "An alloy made of Copper and Tin. Brittle but historic, strong, and highly resistant to saltwater corrosion. Used in ship propellers, bearings, and statues.";
+          isSuccess = true;
+        } else if (matchRecipe(['Fe', 'Cr', 'Ni', 'C'])) {
+          alloyName = "Stainless Steel";
+          alloyDesc = "A stellar alloy of Iron, Chromium, Nickel, and Carbon. The addition of Chromium forms a passive layer of chromium oxide that prevents rust. Used in surgical instruments, cutlery, and aerospace hulls.";
+          isSuccess = true;
+        } else if (matchRecipe(['Ni', 'Cr'])) {
+          alloyName = "Nichrome";
+          alloyDesc = "Forged from Nickel and Chromium. Has high electrical resistance and forms a protective layer of chromium oxide when heated, making it ideal for heating elements in toasters and hair dryers.";
+          isSuccess = true;
+        } else if (matchRecipe(['Fe', 'Ni', 'Co'])) {
+          alloyName = "Alnico Magnet Core";
+          alloyDesc = "Composed of Iron, Nickel, and Cobalt. Possesses strong ferromagnetic properties, resisting demagnetization to form powerful permanent magnets used in electric motors and guitar pickups.";
+          isSuccess = true;
+        }
+
+        if (isSuccess) {
+          playSuccessSound();
+        } else {
+          playErrorSound();
+        }
+
+        document.getElementById('alloyResultTitle').innerText = alloyName;
+        document.getElementById('alloyResultDesc').innerText = alloyDesc;
+        resultCard.style.display = 'block';
+
+      }, 1500);
+    }
+
+    // --- Catalyst Chamber Logic ---
+    let currentReaction = 'haber';
+    let currentCatalyst = 'none';
+    let animationInterval = null;
+    let particles = [];
+
+    const reactions = {
+      haber: {
+        title: "Haber's Process Catalytic Chamber",
+        eq: "N₂ + 3H₂ &rightleftharpoons; 2NH₃",
+        correctCat: 'Fe',
+        catalyzedCurve: 'M 10 170 Q 150 110, 390 170',
+        uncatalyzedCurve: 'M 10 170 Q 150 10, 390 170',
+        reactantColors: ['#38bdf8', '#38bdf8', '#38bdf8', '#fb7185'],
+        text: "Haber's Process synthesizes Ammonia ($NH_3$). Finely divided **Iron (Fe)** catalyst lowers activation energy by providing a solid surface. Reactant gases (Nitrogen and Hydrogen) adsorb onto the iron lattice, weakening their bonds and allowing them to react easily."
+      },
+      contact: {
+        title: "Contact Process Catalytic Chamber",
+        eq: "2SO₂ + O₂ &rightleftharpoons; 2SO₃",
+        correctCat: 'V2O5',
+        catalyzedCurve: 'M 10 170 Q 150 100, 390 170',
+        uncatalyzedCurve: 'M 10 170 Q 150 15, 390 170',
+        reactantColors: ['#fbbf24', '#f87171', '#f87171'],
+        text: "Contact Process converts Sulfur Dioxide ($SO_2$) into Sulfur Trioxide ($SO_3$). **Vanadium Pentoxide ($V_2O_5$)** is the catalyst. Transition metal vanadium switches oxidation states (+4 and +5) during the reaction cycle to facilitate oxygen transfer."
+      },
+      hydrogenation: {
+        title: "Hydrogenation Catalytic Chamber",
+        eq: "Vegetable Oil + H₂ &rarr; Margarine",
+        correctCat: 'Ni',
+        catalyzedCurve: 'M 10 170 Q 150 115, 390 170',
+        uncatalyzedCurve: 'M 10 170 Q 150 20, 390 170',
+        reactantColors: ['#34d399', '#60a5fa'],
+        text: "Hydrogenation converts unsaturated liquid vegetable oils into solid fats. Finely divided **Nickel (Ni)** acts as a heterogeneous catalyst, adsorbing hydrogen gas molecules on its surface to ease addition across carbon-carbon double bonds."
+      }
+    };
+
+    function selectReaction(rxn) {
+      playSelectSound();
+      currentReaction = rxn;
+      document.querySelectorAll('.reaction-option').forEach(opt => opt.classList.remove('active'));
+      document.querySelector(`[data-reaction="${rxn}"]`).classList.add('active');
+
+      document.getElementById('catWorkbenchTitle').innerText = reactions[rxn].title;
+      applyCatalyst('none');
+    }
+
+    function applyCatalyst(cat) {
+      playSelectSound();
+      currentCatalyst = cat;
+      document.querySelectorAll('.catalyst-btn').forEach(btn => btn.classList.remove('active'));
+      
+      const targetBtn = Array.from(document.querySelectorAll('.catalyst-btn')).find(b => b.innerText.includes(cat) || (cat==='none' && b.innerText.includes('None')));
+      if (targetBtn) targetBtn.classList.add('active');
+
+      const rxnInfo = reactions[currentReaction];
+      const curve = document.getElementById('graphCurve');
+      const feedback = document.getElementById('catFeedback');
+      const label = document.getElementById('activationLabel');
+
+      if (cat === rxnInfo.correctCat) {
+        playSuccessSound();
+        curve.setAttribute('d', rxnInfo.catalyzedCurve);
+        curve.classList.add('catalyzed');
+        label.innerText = "Catalyzed Activation Energy (Ea is Lowered!)";
+        label.style.color = 'var(--success)';
+        feedback.innerHTML = `<strong>Catalyst Active!</strong> ${rxnInfo.text}`;
+        setParticleSpeed(true);
+      } else if (cat === 'none') {
+        curve.setAttribute('d', rxnInfo.uncatalyzedCurve);
+        curve.classList.remove('catalyzed');
+        label.innerText = "Uncatalyzed Activation Energy (Ea)";
+        label.style.color = 'var(--accent-gold)';
+        feedback.innerText = "Reaction running slowly. Place the correct catalyst on the workbench to speed up the process!";
+        setParticleSpeed(false);
+      } else {
+        playErrorSound();
+        curve.setAttribute('d', rxnInfo.uncatalyzedCurve);
+        curve.classList.remove('catalyzed');
+        label.innerText = "Ineffective Catalyst! (Ea remains High)";
+        label.style.color = 'var(--error)';
+        feedback.innerHTML = `<span style="color: var(--error);"><strong>Wrong Catalyst!</strong></span> This reaction is not catalyzed by ${cat}. Recall your Class 12 commercial synthesis reactions. Try a different transition metal catalyst.`;
+        setParticleSpeed(false);
+      }
+    }
+
+    function startCatalystParticles() {
+      const chamber = document.getElementById('moleculeChamber');
+      chamber.innerHTML = '';
+      particles = [];
+
+      const width = chamber.clientWidth || 500;
+      const height = chamber.clientHeight || 160;
+
+      for (let i = 0; i < 16; i++) {
+        const div = document.createElement('div');
+        div.className = 'molecule';
+        
+        const x = Math.random() * (width - 15);
+        const y = Math.random() * (height - 15);
+        div.style.left = `${x}px`;
+        div.style.top = `${y}px`;
+
+        const colors = reactions[currentReaction].reactantColors;
+        div.style.backgroundColor = colors[i % colors.length];
+        
+        const angle = Math.random() * Math.PI * 2;
+        particles.push({
+          element: div,
+          x: x,
+          y: y,
+          vx: Math.cos(angle),
+          vy: Math.sin(angle),
+          baseSpeed: 1.2
+        });
+
+        chamber.appendChild(div);
+      }
+
+      if (animationInterval) clearInterval(animationInterval);
+      animationInterval = setInterval(updateParticles, 30);
+    }
+
+    function setParticleSpeed(isCatalyzed) {
+      particles.forEach(p => {
+        p.baseSpeed = isCatalyzed ? 4.5 : 1.2;
+      });
+    }
+
+    function updateParticles() {
+      const chamber = document.getElementById('moleculeChamber');
+      if (!chamber) return;
+      const width = chamber.clientWidth;
+      const height = chamber.clientHeight;
+
+      particles.forEach(p => {
+        p.x += p.vx * p.baseSpeed;
+        p.y += p.vy * p.baseSpeed;
+
+        if (p.x <= 0 || p.x >= width - 12) {
+          p.vx *= -1;
+          p.x = Math.max(0, Math.min(p.x, width - 12));
+        }
+        if (p.y <= 0 || p.y >= height - 12) {
+          p.vy *= -1;
+          p.y = Math.max(0, Math.min(p.y, height - 12));
+        }
+
+        p.element.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+      });
+    }
+
+    /* -------------------------------------------------------------
+       8. GAME 4: LANTHANOID SLIDER
+       ------------------------------------------------------------- */
+    const lanthanoidSizes = {
+      57: { sym: 'La', name: 'Lanthanum', radius: 187, charge: 57 },
+      58: { sym: 'Ce', name: 'Cerium', radius: 183, charge: 58 },
+      59: { sym: 'Pr', name: 'Praseodymium', radius: 182, charge: 59 },
+      60: { sym: 'Nd', name: 'Neodymium', radius: 181, charge: 60 },
+      61: { sym: 'Pm', name: 'Promethium', radius: 180, charge: 61 },
+      62: { sym: 'Sm', name: 'Samarium', radius: 179, charge: 62 },
+      63: { sym: 'Eu', name: 'Europium', radius: 204, charge: 63 },
+      64: { sym: 'Gd', name: 'Gadolinium', radius: 179, charge: 64 },
+      65: { sym: 'Tb', name: 'Terbium', radius: 178, charge: 65 },
+      66: { sym: 'Dy', name: 'Dysprosium', radius: 177, charge: 66 },
+      67: { sym: 'Ho', name: 'Holmium', radius: 176, charge: 67 },
+      68: { sym: 'Er', name: 'Erbium', radius: 175, charge: 68 },
+      69: { sym: 'Tm', name: 'Thulium', radius: 174, charge: 69 },
+      70: { sym: 'Yb', name: 'Ytterbium', radius: 194, charge: 70 },
+      71: { sym: 'Lu', name: 'Lutetium', radius: 173, charge: 71 }
+    };
+
+    const slider = document.getElementById('lanSlider');
+    slider.addEventListener('input', (e) => {
+      const zVal = parseInt(e.target.value);
+      updateLanthanoidContractionView(zVal);
+    });
+
+    function updateLanthanoidContractionView(z) {
+      const data = lanthanoidSizes[z];
+      
+      document.getElementById('lanNodeLabel').innerText = `${data.name} (${data.sym})`;
+      document.getElementById('lanRadiusMetric').innerText = `${data.radius} pm`;
+      document.getElementById('lanCoreCharge').innerText = `+${data.charge}`;
+
+      const maxRadius = 187;
+      const pct = data.radius / maxRadius;
+      const circleWidth = Math.floor(180 * pct);
+      
+      const circle = document.getElementById('lanAtomCircle');
+      circle.style.width = `${circleWidth}px`;
+      circle.style.height = `${circleWidth}px`;
+
+      if (z === 63 || z === 70) {
+        circle.style.borderColor = 'var(--accent-gold)';
+        circle.style.boxShadow = '0 0 25px var(--accent-gold-glow)';
+      } else {
+        circle.style.borderColor = 'var(--accent-f)';
+        circle.style.boxShadow = '0 0 20px rgba(168, 85, 247, 0.1)';
+      }
+
+      document.querySelectorAll('.slider-tick').forEach(t => t.classList.remove('active'));
+      const activeTick = document.getElementById(`tick-${z}`);
+      if (activeTick) activeTick.classList.add('active');
+
+      playTone(300 + (z - 57) * 25, 'sine', 0.05);
+    }
+
+    /* -------------------------------------------------------------
+       9. GAME 5: CHEMISTRY QUIZ QUEST
+       ------------------------------------------------------------- */
+    const quizQuestions = [
+      {
+        q: "Which transition element does NOT exhibit variable oxidation states in its compounds?",
+        a: ["Iron (Fe)", "Manganese (Mn)", "Scandium (Sc)", "Titanium (Ti)"],
+        correct: 2,
+        exp: "Scandium (Z=21) has configuration [Ar] 3d¹ 4s². It exhibits only the +3 oxidation state, as losing all 3 valence electrons leads to the stable noble gas configuration of Argon."
+      },
+      {
+        q: "Why do transition elements exhibit high enthalpies of atomization?",
+        a: ["Due to their low boiling points", "Due to a large number of unpaired d-electrons forming strong metallic bonds", "Due to weak dispersion forces", "Due to their fully filled d-subshells"],
+        correct: 1,
+        exp: "A large number of unpaired d-electrons participate in interatomic metallic bonding, which significantly strengthens the metallic lattice and increases the enthalpy of atomization."
+      },
+      {
+        q: "Which transition element of the 3d series has the highest melting point?",
+        a: ["Manganese (Mn)", "Chromium (Cr)", "Iron (Fe)", "Zinc (Zn)"],
+        correct: 1,
+        exp: "Chromium (Z=24) has the configuration [Ar] 3d⁵ 4s¹ with 6 unpaired electrons participating in metallic bonding, resulting in a very high melting point. Manganese is an anomaly due to its stable half-filled d⁵ configuration which keeps its electrons localized."
+      },
+      {
+        q: "Why does Zinc have a relatively low melting point and enthalpy of atomization?",
+        a: ["It has no d-electrons.", "It has a fully filled d-subshell (d¹⁰), so no d-electrons participate in metallic bonding.", "It has too many unpaired electrons.", "It is a liquid metal at room temperature."],
+        correct: 1,
+        exp: "Zinc (Z=30) has a configuration of [Ar] 3d¹⁰ 4s². Since the 3d subshell is completely filled, these electrons do not participate in metallic bonding, resulting in weak metallic bonds and a low melting point."
+      },
+      {
+        q: "Which transition metal shows the highest oxidation state of +8 in its oxide?",
+        a: ["Osmium (Os)", "Manganese (Mn)", "Rhenium (Re)", "Iron (Fe)"],
+        correct: 0,
+        exp: "Osmium (Os, Z=76) forms Osmium tetroxide (OsO₄) where Osmium exhibits its highest oxidation state of +8. Ruthenium (Ru) also exhibits +8 in RuO₄."
+      },
+      {
+        q: "Why is Cu²⁺ stable in aqueous solution whereas Cu⁺ undergoes disproportionation?",
+        a: ["Cu⁺ has a higher hydration enthalpy.", "Cu²⁺ has a much higher negative hydration enthalpy which compensates for its high second ionization enthalpy.", "Cu⁺ is more paramagnetic.", "Cu²⁺ has a fully-filled d-subshell."],
+        correct: 1,
+        exp: "Although Cu⁺ has a stable 3d¹⁰ configuration, Cu²⁺ has a much larger negative hydration enthalpy in water, which more than compensates for the energy required to remove the second electron."
+      },
+      {
+        q: "What is the disproportionation reaction of Cu⁺ in aqueous solution?",
+        a: ["2Cu⁺ → Cu²⁺ + Cu", "Cu⁺ + H₂O → CuO + H⁺", "3Cu⁺ → Cu³⁺ + 2Cu", "Cu⁺ → Cu²⁺ + e⁻"],
+        correct: 0,
+        exp: "2Cu⁺ (aq) → Cu²⁺ (aq) + Cu (s) is a spontaneous disproportionation reaction because Cu²⁺ is much more stable in water due to its high hydration energy."
+      },
+      {
+        q: "Which of the following ions is diamagnetic?",
+        a: ["Ti³⁺", "Fe²⁺", "Zn²⁺", "Cu²⁺"],
+        correct: 2,
+        exp: "Zinc ion (Zn²⁺, 3d¹⁰) has all electrons paired up, so it has no net magnetic moment and is diamagnetic."
+      },
+      {
+        q: "Why are KMnO₄ crystals intensely purple in color even though Mn⁷⁺ has a d⁰ configuration?",
+        a: ["Due to d-d transition", "Due to charge transfer spectrum from oxygen to manganese", "Due to f-d transition", "Due to crystal field splitting"],
+        correct: 1,
+        exp: "The intense purple color of KMnO₄ is not due to d-d transitions (since Mn⁷⁺ has a d⁰ configuration). Instead, it arises from Ligand-to-Metal Charge Transfer (LMCT) where an electron is temporarily transferred from an oxygen (O²⁻) orbital to the empty d-orbitals of manganese."
+      },
+      {
+        q: "The E°(M²⁺/M) value for copper is positive (+0.34 V). What does this indicate?",
+        a: ["Copper is highly reactive.", "Copper cannot displace hydrogen from dilute acids.", "Copper is a strong reducing agent.", "Copper is easily oxidized by acids."],
+        correct: 1,
+        exp: "A positive E° electrode potential means copper is less reactive than hydrogen and cannot displace hydrogen gas from dilute non-oxidizing acids like HCl."
+      },
+      {
+        q: "What is the electronic configuration of Gadolinium (Gd, Z=64)?",
+        a: ["[Xe] 4f⁷ 5d¹ 6s²", "[Xe] 4f⁸ 6s²", "[Xe] 4f⁷ 5d² 6s¹", "[Xe] 4f⁶ 5d² 6s²"],
+        correct: 0,
+        exp: "Gadolinium (Z=64) has configuration [Xe] 4f⁷ 5d¹ 6s². It has a half-filled 4f subshell (4f⁷) which is highly stable, causing the 64th electron to enter the 5d orbital instead of 4f."
+      },
+      {
+        q: "Why do transition metals easily form interstitial compounds?",
+        a: ["Due to their high reactivity", "Because small atoms like H, C, and N can fit inside the voids of their crystal lattice", "Due to their low boiling points", "Because they form strong ionic lattices"],
+        correct: 1,
+        exp: "Transition metals have interstitial sites (voids) in their crystal structures. Small non-metal atoms (H, C, N, B) can fit into these voids, forming interstitial compounds without forming traditional chemical bonds."
+      },
+      {
+        q: "Which transition metal of the 3d series exhibits the highest density?",
+        a: ["Iron (Fe)", "Manganese (Mn)", "Copper (Cu)", "Scandium (Sc)"],
+        correct: 2,
+        exp: "Density increases across the 3d series from Scandium to Copper due to decrease in atomic volume and increase in atomic mass. Copper (8.92 g/cm³) is the densest in the 3d series (Zinc has a slightly lower density due to increased atomic radius)."
+      },
+      {
+        q: "Which element shows the lowest enthalpy of atomization in the 3d transition series?",
+        a: ["Iron (Fe)", "Copper (Cu)", "Zinc (Zn)", "Chromium (Cr)"],
+        correct: 2,
+        exp: "Zinc has a fully filled d-subshell ([Ar] 3d¹⁰ 4s²). With no unpaired d-electrons available for metallic bonding, its metallic lattice is weak, resulting in the lowest enthalpy of atomization."
+      },
+      {
+        q: "Why do transition metals show excellent catalytic properties?",
+        a: ["Due to their low ionization energies", "Due to their variable oxidation states and large surface area for adsorption", "Because they are highly electropositive", "Due to their high melting points"],
+        correct: 1,
+        exp: "Their ability to exhibit multiple oxidation states allows them to form unstable intermediate compounds, and their surfaces provide active adsorption sites to bring reactants together, lowering activation energy."
+      },
+      {
+        q: "What is Lanthanoid Contraction?",
+        a: ["The sudden increase in atomic size across lanthanoids.", "The steady decrease in atomic and ionic radii from Lanthanum to Lutetium.", "The increase in metallic character across lanthanoids.", "The decrease in atomic mass of lanthanoids."],
+        correct: 1,
+        exp: "Lanthanoid Contraction refers to the steady, progressive decrease in the atomic and ionic radii of the lanthanoid elements as the atomic number increases from Lanthanum (Z=57) to Lutetium (Z=71)."
+      },
+      {
+        q: "What is the primary cause of Lanthanoid Contraction?",
+        a: ["Poor shielding effect of 5d electrons", "Poor shielding effect of 4f electrons", "High shielding effect of 4f electrons", "Strong shielding of 6s electrons"],
+        correct: 1,
+        exp: "4f orbitals have highly diffused shapes, which leads to extremely poor shielding of the outer shell. As nuclear charge increases, outer electrons are pulled closer to the nucleus, shrinking the atom."
+      },
+      {
+        q: "Which of the following pairs of transition elements have almost identical ionic radii?",
+        a: ["Zr and Hf", "Ti and Zr", "V and Nb", "Cr and Mo"],
+        correct: 0,
+        exp: "Zirconium (Zr, Z=40, Period 5) and Hafnium (Hf, Z=72, Period 6) have almost identical radii (160 pm vs 159 pm) because the size increase expected from adding an electron shell is offset by Lanthanoid Contraction."
+      },
+      {
+        q: "What is the order of shielding effect of different subshell orbitals?",
+        a: ["s > p > d > f", "f > d > p > s", "d > f > p > s", "s > f > d > p"],
+        correct: 0,
+        exp: "The shielding power decreases in the order s > p > d > f due to the shapes of the orbitals; s-orbitals are spherical and closest to the nucleus, while f-orbitals are highly diffused."
+      },
+      {
+        q: "Why is Actinoid Contraction greater than Lanthanoid Contraction?",
+        a: ["5f electrons shield better than 4f electrons.", "5f electrons shield the nuclear charge poorer than 4f electrons.", "Actinoid nuclei have fewer protons.", "Lanthanoids have a larger atomic volume."],
+        correct: 1,
+        exp: "5f electrons are more diffused and extend further from the nucleus than 4f electrons. Thus, they shield the increasing nuclear charge even more poorly, leading to a steeper contraction across actinoids."
+      },
+      {
+        q: "How does density vary across the 3d transition series?",
+        a: ["Decreases continuously.", "Increases from Sc to Cu, then drops slightly for Zn.", "Remains constant.", "Decreases initially then increases."],
+        correct: 1,
+        exp: "As we move from Sc to Cu, the atomic mass increases while the atomic radius decreases, causing density to rise. Zinc has a larger atomic radius due to filled d-orbitals causing electron repulsion, causing its density to drop slightly."
+      },
+      {
+        q: "Which 3d transition series element has the highest first ionization enthalpy?",
+        a: ["Zinc (Zn)", "Copper (Cu)", "Iron (Fe)", "Scandium (Sc)"],
+        correct: 0,
+        exp: "Zinc has the highest first ionization enthalpy in the 3d series because removing an electron requires breaking a stable, fully-filled s-subshell (4s²) from its stable [Ar] 3d¹⁰ 4s² configuration."
+      },
+      {
+        q: "Compared to s-block elements, transition metals are much harder and have higher melting points. Why?",
+        a: ["Transition metals are heavier.", "In transition metals, both ns and (n-1)d electrons participate in metallic bonding, creating a stronger lattice.", "Transition metals are less reactive.", "s-block metals have more valence electrons."],
+        correct: 1,
+        exp: "Transition metals have unpaired d-electrons which participate in covalent-like metallic bonding in addition to s-electrons. s-block metals only have 1 or 2 s-electrons participating, forming weaker metallic bonds."
+      },
+      {
+        q: "What trend is observed in the atomic size of transition metals across a period?",
+        a: ["Decreases continuously.", "Increases continuously.", "Decreases initially, remains nearly constant, and increases slightly at the end.", "Increases initially and then decreases."],
+        correct: 2,
+        exp: "Atomic size decreases initially as nuclear charge increases. It stabilizes in the middle due to shielding by d-electrons balancing the nuclear charge. At the end, electron-electron repulsions in fully-filled d-orbitals cause the size to expand slightly."
+      },
+      {
+        q: "What is the most common stable oxidation state for all Lanthanoid elements?",
+        a: ["+2", "+3", "+4", "+6"],
+        correct: 1,
+        exp: "Although some lanthanoids exhibit +2 (e.g. Eu²⁺, Yb²⁺) or +4 (e.g. Ce⁴⁺, Tb⁴⁺) states, the +3 oxidation state is the most common, stable, and dominant state for all lanthanoids."
+      },
+      {
+        q: "Why is Cerium stable in the +4 oxidation state (Ce⁴⁺)?",
+        a: ["It has a half-filled f-subshell.", "It achieves a stable noble gas configuration ([Xe] 4f⁰).", "It has a high hydration enthalpy.", "It has a fully-filled 5d orbital."],
+        correct: 1,
+        exp: "Cerium (Z=58) has configuration [Xe] 4f¹ 5d¹ 6s². By losing 4 electrons, Ce⁴⁺ achieves the highly stable electronic configuration of the noble gas Xenon ([Xe] 4f⁰)."
+      },
+      {
+        q: "Eu²⁺ acts as a strong reducing agent. What is the reason for this behavior?",
+        a: ["Eu²⁺ is highly unstable in air.", "Eu²⁺ wants to oxidize to the more stable +3 oxidation state common to lanthanoids.", "Eu²⁺ has a noble gas configuration.", "Eu²⁺ is a liquid metal."],
+        correct: 1,
+        exp: "The most stable oxidation state for lanthanoids is +3. Europium in the +2 state (Eu²⁺) readily loses an electron (oxidizes) to become Eu³⁺, making it a strong reducing agent."
+      },
+      {
+        q: "Why does Ce⁴⁺ act as a powerful analytical oxidizing agent in laboratory titrations?",
+        a: ["It is easily oxidized.", "It has a strong tendency to gain an electron to reduce to the highly stable +3 state (Ce³⁺).", "It is intensely colored.", "It forms insoluble precipitates."],
+        correct: 1,
+        exp: "Because +3 is the most stable state for Cerium in solution, Ce⁴⁺ acts as a strong oxidizing agent, readily gaining an electron to reduce to Ce³⁺ ($E° = +1.74\\text{ V}$)."
+      },
+      {
+        q: "Why is Mn³⁺ a powerful oxidizing agent, whereas Cr²⁺ is a strong reducing agent?",
+        a: ["Mn³⁺ gains an electron to form stable d⁵ (Mn²⁺), while Cr²⁺ loses an electron to form stable t₂g³ (Cr³⁺).", "Mn³⁺ has a lower nuclear charge.", "Cr²⁺ has a stable d¹⁰ configuration.", "They both form colorless ions."],
+        correct: 0,
+        exp: "Mn³⁺ ([Ar] 3d⁴) gains an electron (reduces) to achieve a stable half-filled 3d⁵ configuration in Mn²⁺. Cr²⁺ ([Ar] 3d⁴) loses an electron (oxidizes) to achieve a stable t₂g³ half-filled configuration of Cr³⁺ in water."
+      },
+      {
+        q: "Which transition element of the 3d series exhibits the maximum number of oxidation states?",
+        a: ["Iron (Fe)", "Manganese (Mn)", "Chromium (Cr)", "Cobalt (Co)"],
+        correct: 1,
+        exp: "Manganese (Z=25) has 5 unpaired d-electrons and 2 s-electrons ([Ar] 3d⁵ 4s²). It can exhibit oxidation states from +2 to +7, which is the highest number of oxidation states in the 3d series."
+      },
+      {
+        q: "Why do transition elements exhibit variable oxidation states?",
+        a: ["Because they have high ionization energies.", "Because the energy difference between (n-1)d and ns orbitals is very small, allowing both to participate in bonding.", "Because they lose electrons from inner shells first.", "Due to their high electronegativity."],
+        correct: 1,
+        exp: "Since the energy level of the (n-1)d subshell is very close to the ns subshell, electrons from both subshells can be used for chemical bond formation, resulting in variable oxidation states."
+      },
+      {
+        q: "What is the highest oxidation state shown by Manganese in its oxoanions?",
+        a: ["+4", "+6", "+7", "+8"],
+        correct: 2,
+        exp: "Manganese exhibits a +7 oxidation state in the permanganate ion (MnO₄⁻), which represents the maximum oxidation state Mn can achieve by sharing all its 7 valence electrons."
+      },
+      {
+        q: "What is the oxidation state of Iron (Fe) in the brown ring complex [Fe(H₂O)₅(NO)]SO₄?",
+        a: ["+1", "+2", "+3", "+4"],
+        correct: 0,
+        exp: "In the brown ring test complex, nitric oxide transfers an electron to Fe²⁺, forming Fe⁺ and NO⁺. Thus, iron is present in the rare +1 oxidation state ([Ar] 3d⁷)."
+      },
+      {
+        q: "Why do Actinoids exhibit a wider range of oxidation states compared to Lanthanoids?",
+        a: ["Actinoids are heavier.", "The energy gap between 5f, 6d, and 7s orbitals is smaller than the gap between 4f, 5d, and 6s orbitals.", "Actinoids are all synthetic.", "Lanthanoids are more reactive."],
+        correct: 1,
+        exp: "In actinoids, the 5f, 6d, and 7s subshells are much closer in energy than the 4f, 5d, and 6s subshells of lanthanoids, allowing more outer electrons to participate in bond formation."
+      },
+      {
+        q: "In acidic medium, how many moles of Fe²⁺ are oxidized by one mole of Potassium Dichromate (K₂Cr₂O₇)?",
+        a: ["1 mole", "3 moles", "5 moles", "6 moles"],
+        correct: 3,
+        exp: "The balanced ionic equation is: Cr₂O₇²⁻ + 14H⁺ + 6Fe²⁺ → 2Cr³⁺ + 6Fe³⁺ + 7H₂O. Therefore, 1 mole of dichromate oxidizes exactly 6 moles of Fe²⁺."
+      },
+      {
+        q: "What happens to yellow Chromate (CrO₄²⁻) when pH is lowered by adding acid?",
+        a: ["It reduces to green Cr³⁺.", "It converts to orange Dichromate (Cr₂O₇²⁻).", "It precipitates as black CrO₃.", "It remains unchanged."],
+        correct: 1,
+        exp: "Chromate and dichromate ions exist in a pH-dependent equilibrium: 2CrO₄²⁻ (yellow) + 2H⁺ ⇌ Cr₂O₇²⁻ (orange) + H₂O. Acidic conditions (low pH) drive the equilibrium to form orange dichromate."
+      },
+      {
+        q: "What is the structure of the Dichromate ion (Cr₂O₇²⁻)?",
+        a: ["Planar double triangle", "Two tetrahedral units sharing a corner with a Cr-O-Cr bridge angle of ~126°", "Linear arrangement of Cr atoms", "Octahedral symmetry"],
+        correct: 1,
+        exp: "The dichromate ion consists of two tetrahedral CrO₄ units sharing a common oxygen corner, forming a Cr-O-Cr bridge with a bond angle of 126°."
+      },
+      {
+        q: "What is formed when black Pyrolusite ore (MnO₂) is fused with KOH in the presence of air?",
+        a: ["Purple KMnO₄", "Dark green K₂MnO₄ (Potassium Manganate)", "Pink MnO", "Colorless MnSO₄"],
+        correct: 1,
+        exp: "MnO₂ is fused with KOH in the presence of oxygen to produce potassium manganate: 2MnO₂ + 4KOH + O₂ → 2K₂MnO₄ (dark green) + 2H₂O."
+      },
+      {
+        q: "What happens when dark green Manganate (MnO₄²⁻) is placed in an acidic solution?",
+        a: ["It undergoes disproportionation to form purple permanganate (MnO₄⁻) and brown MnO₂.", "It remains stable.", "It reduces entirely to Mn²⁺.", "It precipitates as metal."],
+        correct: 0,
+        exp: "In acidic media, manganate (MnO₄²⁻) disproportionates spontaneously: 3MnO₄²⁻ + 4H⁺ → 2MnO₄⁻ (purple) + MnO₂ (brown) + 2H₂O."
+      },
+      {
+        q: "In faint alkaline or neutral medium, KMnO₄ oxidizes iodide (I⁻) into which product?",
+        a: ["I₂ (Iodine gas)", "IO₃⁻ (Iodate ion)", "I₃⁻ (Triiodide)", "IO⁻ (Hypoiodite)"],
+        correct: 1,
+        exp: "In acidic medium, KMnO₄ oxidizes I⁻ to I₂. However, in neutral or faintly alkaline medium, KMnO₄ oxidizes iodide (I⁻) to iodate (IO₃⁻): 2MnO₄⁻ + H₂O + I⁻ → 2MnO₂ + 2OH⁻ + IO₃⁻."
+      },
+      {
+        q: "How many moles of oxalate ions (C₂O₄²⁻) can be oxidized by 1 mole of KMnO₄ in an acidic medium?",
+        a: ["1 mole", "2 moles", "2.5 moles", "5 moles"],
+        correct: 2,
+        exp: "The redox reaction is: 2MnO₄⁻ + 16H⁺ + 5C₂O₄²⁻ → 2Mn²⁺ + 10CO₂ + 8H₂O. Thus, 2 moles of MnO₄⁻ oxidize 5 moles of oxalate, meaning 1 mole of MnO₄⁻ oxidizes 2.5 moles."
+      },
+      {
+        q: "What is the oxidation state of Chromium (Cr) in the Chromate ion (CrO₄²⁻)?",
+        a: ["+3", "+4", "+6", "+8"],
+        correct: 2,
+        exp: "Let x be the oxidation state of Cr: x + 4(-2) = -2 ⇒ x - 8 = -2 ⇒ x = +6. Thus, chromium is in its maximum +6 oxidation state."
+      },
+      {
+        q: "What is the spin-only magnetic moment of a Ti²⁺ ion (Z=22)?",
+        a: ["1.73 BM", "2.84 BM", "3.87 BM", "4.90 BM"],
+        correct: 1,
+        exp: "Ti (3d² 4s²) loses 2 electrons to form Ti²⁺ (3d²). It has n=2 unpaired electrons. Magnetic moment μ = &radic;(2*(2+2)) = &radic;8 ≈ 2.84 BM."
+      },
+      {
+        q: "Calculate the spin-only magnetic moment of Mn²⁺ (Z=25).",
+        a: ["1.73 BM", "3.87 BM", "4.90 BM", "5.92 BM"],
+        correct: 3,
+        exp: "Mn²⁺ has a 3d⁵ configuration with n=5 unpaired electrons. μ = &radic;(5*(5+2)) = &radic;35 ≈ 5.92 BM."
+      },
+      {
+        q: "Which of the following ions has a spin-only magnetic moment of 3.87 BM?",
+        a: ["Fe²⁺", "Cr³⁺", "Ti³⁺", "Zn²⁺"],
+        correct: 1,
+        exp: "A magnetic moment of 3.87 BM corresponds to n=3 unpaired electrons. Cr³⁺ ([Ar] 3d³) has 3 unpaired electrons."
+      },
+      {
+        q: "An unknown transition metal ion has a magnetic moment of 4.90 BM. How many unpaired electrons does it have?",
+        a: ["2", "3", "4", "5"],
+        correct: 2,
+        exp: "A magnetic moment of 4.90 BM corresponds to n=4 unpaired electrons because &radic;(4*(4+2)) = &radic;24 ≈ 4.90 BM."
+      },
+      {
+        q: "What is the spin-only magnetic moment of Cu²⁺ (Z=29)?",
+        a: ["0.00 BM", "1.73 BM", "2.84 BM", "5.92 BM"],
+        correct: 1,
+        exp: "Cu²⁺ has a 3d⁹ configuration. By Hund's rule, this leaves exactly n=1 unpaired electron. μ = &radic;(1*(1+2)) = &radic;3 ≈ 1.73 BM."
+      },
+      {
+        q: "Why is aqueous Cu²⁺ blue, while aqueous Zn²⁺ is colorless?",
+        a: ["Zn²⁺ is highly toxic.", "Cu²⁺ has an unpaired electron in d-orbitals allowing d-d transitions, whereas Zn²⁺ has a fully-filled 3d¹⁰ shell.", "Zn²⁺ has a lower nuclear charge.", "Cu²⁺ is a stronger base."],
+        correct: 1,
+        exp: "Color in transition metal ions is due to d-d electronic transitions. Cu²⁺ (3d⁹) has vacant d-orbital space for excitation. Zn²⁺ (3d¹⁰) is fully filled, making transitions impossible and the ion colorless."
+      },
+      {
+        q: "What is the color of aqueous Fe³⁺ ion?",
+        a: ["Pink", "Bright Green", "Yellow/Brown", "Blue"],
+        correct: 2,
+        exp: "Aqueous solutions of Fe³⁺ ions appear yellow or pale brown due to hydrolysis and d-d transitions."
+      },
+      {
+        q: "Which transition metal ion exhibits a bright green color in water?",
+        a: ["Co²⁺", "Ni²⁺", "Cu²⁺", "Mn²⁺"],
+        correct: 1,
+        exp: "Nickel(II) ions (Ni²⁺, 3d⁸) exhibit a distinct green color in aqueous solutions due to crystal field splitting and d-d transitions."
+      },
+      {
+        q: "What is the color of hydrated Cobalt(II) chloride solution (Co²⁺)?",
+        a: ["Orange", "Blue", "Green", "Pink/Red"],
+        correct: 3,
+        exp: "Hydrated Co²⁺ ions ([Co(H₂O)₆]²⁺) are pink or reddish in aqueous solution."
+      },
+      {
+        q: "Why is anhydrous CuSO₄ white, while hydrated CuSO₄.5H₂O is blue?",
+        a: ["Anhydrous CuSO₄ is impure.", "Water molecules act as ligands, splitting the d-orbitals to enable d-d transitions.", "Anhydrous CuSO₄ is acidic.", "Water oxidizes Cu²⁺ to Cu³⁺."],
+        correct: 1,
+        exp: "In hydrated copper sulfate, water molecules coordinate as ligands. This splits the degenerate d-orbitals into t₂g and e_g levels. Absorption of light triggers d-d transitions (blue). Without water, the d-orbitals are degenerate, no transitions occur, and it is white."
+      },
+      {
+        q: "Which of the following transition metal ions is colorless in water?",
+        a: ["V⁴⁺", "Sc³⁺", "Fe³⁺", "Ti³⁺"],
+        correct: 1,
+        exp: "Sc³⁺ (Z=21) has lost 3 electrons to form a 3d⁰ configuration. With no d-electrons, d-d transitions are impossible, making it colorless."
+      },
+      {
+        q: "Which of the following ions is colorless?",
+        a: ["Zn²⁺", "Cu²⁺", "Ni²⁺", "Ti³⁺"],
+        correct: 0,
+        exp: "Zn²⁺ (3d¹⁰) has a completely filled d-subshell. No vacant spaces exist for d-electron transitions, so it is colorless."
+      },
+      {
+        q: "What mechanism explains color in transition metal complex compounds?",
+        a: ["LMCT only", "Crystal Field splitting of d-orbitals followed by d-d transitions upon absorbing visible light", "Refraction of light in water", "Ionization of outer s-electrons"],
+        correct: 1,
+        exp: "Ligands split the d-orbitals into two energy levels. When visible light falls on the complex, an electron absorbs energy and transitions from the lower energy d-orbital to the higher one, reflecting the complementary color."
+      },
+      {
+        q: "Why is the Permanganate ion (MnO₄⁻) purple?",
+        a: ["Due to d-d transitions of Mn", "Due to Charge Transfer from Oxygen (O²⁻) to Manganese (Mn⁷⁺)", "Due to f-f transitions", "Due to high hydration energy"],
+        correct: 1,
+        exp: "Mn⁷⁺ has a d⁰ configuration, so d-d transitions are impossible. The intense color is due to Ligand-to-Metal Charge Transfer (LMCT), where light excites an electron from the oxygen ligand to empty d-orbitals of Mn."
+      },
+      {
+        q: "Paramagnetic behavior is exhibited by substances that contain:",
+        a: ["Only paired electrons", "Unpaired electrons", "Free protons", "High molecular mass"],
+        correct: 1,
+        exp: "Paramagnetism arises from the magnetic moments of unpaired electrons. Substances with unpaired electrons are attracted into magnetic fields."
+      },
+      {
+        q: "Which is a characteristic property of Interstitial Compounds?",
+        a: ["They are chemically highly reactive.", "They are much harder than the parent metal.", "They are soft and malleable.", "They are non-conductors of electricity."],
+        correct: 1,
+        exp: "Interstitial compounds are characterized by being extremely hard (sometimes approaching diamond), having high melting points, retaining metallic conductivity, and being chemically inert."
+      },
+      {
+        q: "What happens to the chemical reactivity of a transition metal when it forms an interstitial hydride or carbide?",
+        a: ["It increases.", "It decreases (becomes chemically inert).", "It remains exactly the same.", "It becomes explosive."],
+        correct: 1,
+        exp: "The interstitial compounds of transition metals are chemically very inert compared to the parent metals because the interstitial voids are locked by non-metal atoms."
+      },
+      {
+        q: "How do the hardness and melting points of interstitial compounds compare to their parent transition metals?",
+        a: ["Both are lower.", "Both are significantly higher.", "Hardness is higher but melting point is lower.", "Hardness is lower but melting point is higher."],
+        correct: 1,
+        exp: "The presence of interstitial atoms prevents the metal planes from sliding past each other, increasing hardness, and strengthens the bonding lattice, increasing melting point."
+      },
+      {
+        q: "Do interstitial compounds conduct electricity?",
+        a: ["No, they are insulators.", "Yes, they retain metallic conductivity.", "They conduct only at very high temperatures.", "They act as semiconductors."],
+        correct: 1,
+        exp: "Interstitial compounds retain the metallic conductivity of the parent transition metal because the valence electron sea remains largely unaffected by the trapped atoms."
+      },
+      {
+        q: "Bronze is a commercial alloy composed of:",
+        a: ["Copper and Zinc", "Copper and Tin", "Iron and Carbon", "Copper and Silver"],
+        correct: 1,
+        exp: "Bronze is an alloy consisting primarily of Copper (Cu) combined with Tin (Sn). Brass is Copper and Zinc."
+      },
+      {
+        q: "What is the primary carbon content in standard Steel alloys?",
+        a: ["0.1% to 1.5%", "10% to 20%", "50%", "Steel contains no carbon."],
+        correct: 0,
+        exp: "Steel is an interstitial alloy of Iron containing small amounts of Carbon (typically 0.1% to 1.5%) to increase hardness and tensile strength."
+      },
+      {
+        q: "What is the metal composition of German Silver?",
+        a: ["Copper, Silver, and Zinc", "Copper, Zinc, and Nickel", "Silver and Gold", "Nickel and Silver"],
+        correct: 1,
+        exp: "German Silver is a misleading name; it contains no silver at all. It is an alloy composed of Copper (50%), Zinc (20%), and Nickel (30%), named only for its silver-like appearance."
+      },
+      {
+        q: "Nichrome wire is an alloy containing which metals?",
+        a: ["Nickel and Copper", "Nickel and Chromium", "Iron and Zinc", "Chromium and Cobalt"],
+        correct: 1,
+        exp: "Nichrome is an alloy made of Nickel (Ni) and Chromium (Cr). It is widely used in heating elements due to its high resistance and oxidation stability at high temperatures."
+      },
+      {
+        q: "Why do transition metals form coordination complexes easily?",
+        a: ["Because they are highly reactive gases.", "Because they have small, highly charged ions and vacant d-orbitals to accept ligand electron pairs.", "Because they have low melting points.", "Because they are highly electronegative."],
+        correct: 1,
+        exp: "Transition metals have: (1) small ionic sizes and high nuclear charge density to attract ligands, and (2) vacant d-orbitals of suitable energy to accept electron pairs from ligands."
+      },
+      {
+        q: "Which ligand can form highly stable ring structures (chelates) with transition metals?",
+        a: ["Chloride (Cl⁻)", "Oxalate (C₂O₄²⁻)", "Ammonia (NH₃)", "Water (H₂O)"],
+        correct: 1,
+        exp: "Bidentate or polydentate ligands like Oxalate (C₂O₄²⁻) or ethylenediamine bind to a metal ion at multiple points, forming stable ring structures called chelates."
+      },
+      {
+        q: "What catalyst is used in Haber's Process for manufacturing ammonia?",
+        a: ["Vanadium Pentoxide (V₂O₅)", "Finely divided Iron (Fe) with Molybdenum promoter", "Nickel (Ni)", "Platinum (Pt)"],
+        correct: 1,
+        exp: "Haber's Process uses finely divided Iron (Fe) as the catalyst and Molybdenum (Mo) as a promoter to synthesize ammonia from nitrogen and hydrogen gases."
+      },
+      {
+        q: "What catalyst is utilized in the Contact Process for making sulfuric acid?",
+        a: ["Iron (Fe)", "Vanadium Pentoxide (V₂O₅)", "Nickel (Ni)", "Copper (Cu)"],
+        correct: 1,
+        exp: "The oxidation of sulfur dioxide to sulfur trioxide (2SO₂ + O₂ ⇌ 2SO₃) in the Contact Process is catalyzed by Vanadium Pentoxide (V₂O₅)."
+      },
+      {
+        q: "Which transition metal catalyst is used in the hydrogenation of vegetable oils?",
+        a: ["Cobalt (Co)", "Nickel (Ni)", "Iron (Fe)", "Copper (Zn)"],
+        correct: 1,
+        exp: "Finely divided Nickel (Ni) is used as a heterogeneous catalyst to add hydrogen across carbon-carbon double bonds in vegetable oils to form solid fats (margarine)."
+      },
+      {
+        q: "What catalyst is used in the Ostwald's Process for manufacturing Nitric acid?",
+        a: ["Iron (Fe)", "Platinum-Rhodium gauze", "Nickel (Ni)", "Silica gel"],
+        correct: 1,
+        exp: "Ostwald's Process uses a Platinum-Rhodium gauze catalyst to oxidize ammonia to nitric oxide ($NO$) at high temperatures."
+      },
+      {
+        q: "What is the composition of the Ziegler-Natta Catalyst used in plastic polymerization?",
+        a: ["Fe + Mo", "TiCl₄ + Al(C₂H₅)₃ (Titanium tetrachloride + Triethylaluminium)", "Pt + Pd", "Ni + Cu"],
+        correct: 1,
+        exp: "The Ziegler-Natta catalyst is a mixture of Titanium tetrachloride (TiCl₄) and Triethylaluminium (Al(C₂H₅)₃) used to polymerize ethene into high-density polythene."
+      },
+      {
+        q: "Which catalyst is used to accelerate the thermal decomposition of Potassium Chlorate (KClO₃)?",
+        a: ["MnO₂ (Manganese dioxide)", "Fe", "Pt", "V₂O₅"],
+        correct: 0,
+        exp: "Manganese dioxide (MnO₂) is mixed with potassium chlorate to act as a catalyst, lowering the decomposition temperature to release oxygen gas."
+      },
+      {
+        q: "How does a transition metal catalyst speed up a chemical reaction?",
+        a: ["By increasing the temperature of reactants.", "By lowering the activation energy of the reaction via an alternative pathway.", "By increasing the concentration of products.", "By reacting permanently with the reactants."],
+        correct: 1,
+        exp: "A catalyst provides an alternative reaction pathway that has a lower activation energy, allowing more reactant molecules to cross the energy barrier per unit time."
+      },
+      {
+        q: "What is the primary step in heterogeneous catalysis by transition metals?",
+        a: ["Dissolution of metals", "Adsorption of reactant molecules on the catalyst surface", "Sublimation of catalysts", "Formation of ionic bonds"],
+        correct: 1,
+        exp: "Heterogeneous catalysis occurs via adsorption, where reactant gases form weak bonds on the transition metal surface. This increases concentration and weakens reactant bonds, accelerating reaction."
+      },
+      {
+        q: "Which transition metal complex catalyst is used in Wacker's Process for converting ethene to acetaldehyde?",
+        a: ["Ni(CO)₄", "PdCl₂ (Palladium chloride)", "V₂O₅", "FeSO₄"],
+        correct: 1,
+        exp: "Wacker's Process uses Palladium chloride (PdCl₂) and Copper chloride (CuCl₂) as catalysts to oxidize ethene to acetaldehyde."
+      },
+      {
+        q: "Which of the following Lanthanoids is a synthetic, radioactive element?",
+        a: ["Cerium (Ce)", "Promethium (Pm)", "Europium (Eu)", "Neodymium (Nd)"],
+        correct: 1,
+        exp: "Promethium (Pm, Z=61) is the only radioactive lanthanoid and does not occur naturally in significant quantities; it is produced synthetically."
+      },
+      {
+        q: "Actinoids show a wider range of oxidation states than Lanthanoids because:",
+        a: ["Actinoids are heavier.", "5f, 6d, and 7s orbitals are closer in energy than 4f, 5d, and 6s orbitals.", "Actinoids are synthetic.", "Lanthanoids are more reactive."],
+        correct: 1,
+        exp: "The energy difference between 5f, 6d, and 7s orbitals is very small, allowing electrons from all three subshells to participate in bonding. In lanthanoids, the 4f subshell is deeply buried and less available."
+      },
+      {
+        q: "Which of the following Actinoids exhibits a +7 oxidation state in its compounds?",
+        a: ["Thorium (Th)", "Neptunium (Np)", "Uranium (U)", "Curium (Cm)"],
+        correct: 1,
+        exp: "Neptunium (Np) and Plutonium (Pu) can exhibit a +7 oxidation state under strongly oxidizing conditions in their heptavalent oxo-species."
+      },
+      {
+        q: "Which of the following Lanthanoid ions is diamagnetic?",
+        a: ["Ce³⁺", "Gd³⁺", "La³⁺", "Dy³⁺"],
+        correct: 2,
+        exp: "Lanthanum(III) ion (La³⁺) has lost 3 electrons, leaving it with the Xenon core [Xe] 4f⁰. With zero f-electrons, it has no unpaired spins and is diamagnetic."
+      },
+      {
+        q: "What causes color in Lanthanoid metal ions?",
+        a: ["d-d transitions", "f-f transitions", "s-d transitions", "Charge transfer spectra"],
+        correct: 1,
+        exp: "Color in lanthanoids is due to f-f electronic transitions. Since the 4f subshell is partially filled, electrons can absorb visible light and transition between f-orbital energy states."
+      },
+      {
+        q: "Mischmetal is a commercial pyrophoric alloy containing:",
+        a: ["95% Lanthanoid metals (mostly Cerium) and ~5% Iron", "Copper and Zinc", "Nickel and Chromium", "Platinum and Gold"],
+        correct: 0,
+        exp: "Mischmetal consists of roughly 95% lanthanoid metals (primarily Cerium, Lanthanum, Neodymium) and 5% Iron, along with traces of S, C, Ca, and Al. Used in lighter flints."
+      },
+      {
+        q: "What is the general outer electronic configuration of f-block elements?",
+        a: ["(n-2)f¹⁻¹⁴ (n-1)d⁰⁻¹ ns²", "(n-1)d¹⁻¹⁰ ns²", "(n-2)f¹⁻¹⁴ ns²", "(n-1)f¹⁻¹⁴ nd¹ ns²"],
+        correct: 0,
+        exp: "The general electronic configuration of inner transition elements is (n-2)f¹⁻¹⁴ (n-1)d⁰⁻¹ ns², representing the filling of the deep (n-2)f subshell."
+      },
+      {
+        q: "What is the main stable oxidation state of all Lanthanoids?",
+        a: ["+2", "+3", "+4", "+5"],
+        correct: 1,
+        exp: "The +3 oxidation state is the highly stable, characteristic, and most common oxidation state shown by all lanthanoids in their compounds."
+      },
+      {
+        q: "Why are all Actinoid elements highly toxic to handle?",
+        a: ["They are liquid metals.", "They combine radioactive emission danger with heavy-metal chemical toxicity.", "They are highly acidic.", "They explode on contact with air."],
+        correct: 1,
+        exp: "Actinoids pose a double hazard: they are chemically toxic heavy metals that damage internal organs (like lead or uranium poisoning) and emit ionizing radiation (alpha, beta, gamma)."
+      },
+      {
+        q: "Which Lanthanoid element is particularly stable in the +2 oxidation state (M²⁺)?",
+        a: ["Cerium (Ce)", "Europium (Eu)", "Gadolinium (Gd)", "Lutetium (Lu)"],
+        correct: 1,
+        exp: "Europium in the +2 state (Eu²⁺) achieves a stable, half-filled 4f⁷ configuration, making this state unusually stable compared to other lanthanoids."
+      },
+      {
+        q: "Why is Fe³⁺ more stable than Fe²⁺?",
+        a: ["Fe³⁺ has a fully filled d-subshell.", "Fe³⁺ has a stable, half-filled 3d⁵ configuration.", "Fe³⁺ has a smaller hydration energy.", "Fe³⁺ is diamagnetic."],
+        correct: 1,
+        exp: "Fe³⁺ has the configuration [Ar] 3d⁵. A half-filled d-subshell has extra stability due to high exchange energy and symmetrical distribution of charge. Fe²⁺ is [Ar] 3d⁶, which is less stable."
+      },
+      {
+        q: "A transition metal ion has a spin-only magnetic moment of 3.87 BM. Its electronic configuration must end in:",
+        a: ["3d²", "3d³", "3d⁵", "3d⁶"],
+        correct: 1,
+        exp: "3.87 BM corresponds to 3 unpaired electrons. A configuration of 3d³ has exactly 3 unpaired electrons. (3d⁷ would also have 3 unpaired electrons)."
+      },
+      {
+        q: "Which of the following ions is most strongly paramagnetic?",
+        a: ["Fe³⁺", "Fe²⁺", "Cu²⁺", "Zn²⁺"],
+        correct: 0,
+        exp: "Fe³⁺ has 5 unpaired electrons (3d⁵). Fe²⁺ has 4 (3d⁶). Cu²⁺ has 1 (3d⁹). Zn²⁺ has 0 (3d¹⁰). The ion with the most unpaired electrons is the most paramagnetic."
+      },
+      {
+        q: "What is formed when Chromite ore (FeCr₂O₄) is fused with Sodium Carbonate in the presence of air?",
+        a: ["Green Cr₂O₃", "Yellow Sodium Chromate (Na₂CrO₄)", "Orange Sodium Dichromate", "Chromium metal"],
+        correct: 1,
+        exp: "Fused chromite ore with sodium carbonate in air yields yellow sodium chromate: 4FeCr₂O₄ + 8Na₂CO₃ + 7O₂ → 8Na₂CrO₄ (yellow) + 2Fe₂O₃ + 8CO₂."
+      },
+      {
+        q: "In acidic medium, Dichromate ion (Cr₂O₇²⁻) oxidizes Hydrogen Sulfide (H₂S) to which product?",
+        a: ["SO₂", "Elemental Sulfur (S)", "H₂SO₄", "SO₃"],
+        correct: 1,
+        exp: "In acidic medium, dichromate oxidizes H₂S to elemental sulfur: Cr₂O₇²⁻ + 8H⁺ + 3H₂S → 2Cr³⁺ + 3S (precipitate) + 7H₂O."
+      },
+      {
+        q: "The green color of aqueous Cr³⁺ ions in solution is due to:",
+        a: ["LMCT charge transfer", "d-d transitions", "f-f transitions", "Hydrated sulfate precipitation"],
+        correct: 1,
+        exp: "Cr³⁺ has a 3d³ configuration. The d-orbitals split in water, allowing electronic excitation within the d-subshell (d-d transitions), which absorbs yellow-red light and transmits green."
+      },
+      {
+        q: "Which of the following oxo-species does NOT have a d⁰ configuration for the metal?",
+        a: ["Ti⁴⁺", "Sc³⁺", "V⁵⁺", "Cr³⁺"],
+        correct: 3,
+        exp: "Ti⁴⁺, Sc³⁺, and V⁵⁺ all have d⁰ configurations (stable noble gas cores). Cr³⁺ is a transition state ending in 3d³, meaning it has 3 d-electrons."
+      },
+      {
+        q: "What is the molecular geometry of the Chromate ion (CrO₄²⁻)?",
+        a: ["Square Planar", "Tetrahedral", "Octahedral", "Linear"],
+        correct: 1,
+        exp: "The chromate ion (CrO₄²⁻) has a tetrahedral structure with chromium at the center bonded to four oxygen atoms."
+      },
+      {
+        q: "Why is the second ionization enthalpy of Copper exceptionally high?",
+        a: ["It has a low nuclear charge.", "It requires removing an electron from a stable, fully-filled 3d¹⁰ shell of Cu⁺.", "Copper is highly electropositive.", "Its atoms are extremely large."],
+        correct: 1,
+        exp: "Cu⁺ has a stable [Ar] 3d¹⁰ configuration. Removing a second electron to form Cu²⁺ requires disrupting this highly stable fully-filled d-subshell, resulting in a very high second ionization enthalpy."
+      },
+      {
+        q: "Why does Ti⁴⁺ not show d-d transition color in aqueous solution?",
+        a: ["Its d-orbitals are fully filled.", "It has a 3d⁰ configuration (no d-electrons are available for transitions).", "It has too many unpaired electrons.", "It is highly unreactive."],
+        correct: 1,
+        exp: "Ti⁴⁺ has a 3d⁰ configuration. Color in transition metal ions is caused by d-electrons jumping between split d-orbital energy levels. With no d-electrons, no transitions can occur, leaving it colorless."
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+
+    function startQuiz() {
+      currentQuestionIdx = 0;
+      quizScore = 0;
+      quizAnswered = false;
+      document.getElementById('quizResultsScreen').style.display = 'none';
+      document.getElementById('quizActiveBox').style.display = 'block';
+      loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+      quizAnswered = false;
+      document.getElementById('quizNextBtn').style.display = 'none';
+      document.getElementById('quizFeedbackBox').style.display = 'none';
+      
+      const qData = quizQuestions[currentQuestionIdx];
+      
+      const pct = ((currentQuestionIdx) / quizQuestions.length) * 100;
+      document.getElementById('quizProgressFill').style.width = `${pct}%`;
+      
+      document.getElementById('quizCurrentNum').innerText = currentQuestionIdx + 1;
+      document.getElementById('quizCurrentPoints').innerText = quizScore;
+      document.getElementById('quizQuestionText').innerText = qData.q;
+
+      const optList = document.getElementById('quizOptionsList');
+      optList.innerHTML = '';
+
+      qData.a.forEach((optionText, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option-item';
+        btn.innerHTML = `<span>${optionText}</span>`;
+        btn.onclick = () => selectQuizOption(idx);
+        optList.appendChild(btn);
+      });
+    }
+
+    function selectQuizOption(selectedIdx) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+
+      const qData = quizQuestions[currentQuestionIdx];
+      const optItems = document.querySelectorAll('.quiz-option-item');
+      const isCorrect = (selectedIdx === qData.correct);
+
+      optItems.forEach((item, idx) => {
+        if (idx === qData.correct) {
+          item.classList.add('correct');
+          item.innerHTML += `<svg style="width: 20px; height: 20px; fill: var(--success);" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`;
+        } else if (idx === selectedIdx) {
+          item.classList.add('incorrect');
+          item.innerHTML += `<svg style="width: 20px; height: 20px; fill: var(--error);" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>`;
+        }
+      });
+
+      const fbBox = document.getElementById('quizFeedbackBox');
+      const fbTitle = document.getElementById('quizFeedbackTitle');
+      const fbText = document.getElementById('quizFeedbackText');
+
+      if (isCorrect) {
+        playSuccessSound();
+        quizScore += 10;
+        fbTitle.innerText = "Correct Answer!";
+        fbTitle.className = "quiz-feedback-title correct";
+      } else {
+        playErrorSound();
+        fbTitle.innerText = "Incorrect Answer!";
+        fbTitle.className = "quiz-feedback-title incorrect";
+      }
+
+      fbText.innerHTML = qData.exp;
+      fbBox.style.display = 'block';
+      
+      document.getElementById('quizCurrentPoints').innerText = quizScore;
+      document.getElementById('quizNextBtn').style.display = 'inline-flex';
+    }
+
+    function nextQuizQuestion() {
+      playSelectSound();
+      currentQuestionIdx++;
+      if (currentQuestionIdx < quizQuestions.length) {
+        loadQuizQuestion();
+      } else {
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      document.getElementById('quizActiveBox').style.display = 'none';
+      const resultsScreen = document.getElementById('quizResultsScreen');
+      resultsScreen.style.display = 'block';
+
+      const finalScore = document.getElementById('resultsScoreText');
+      finalScore.innerText = `${quizScore} / ${quizQuestions.length * 10}`;
+
+      const msg = document.getElementById('resultsMessageText');
+      if (quizScore >= 90) {
+        msg.innerText = "Exceptional Chemist! You scored a perfect badge. You are fully ready for your Board Exam questions on d & f blocks!";
+      } else if (quizScore >= 70) {
+        msg.innerText = "Excellent Work! You have a solid grasp of configuration rules, magnetism, and exceptions.";
+      } else {
+        msg.innerText = "Good effort! Let's review the periodic table properties and orbital configurations, and try again.";
+      }
+    }
+
+    function restartQuiz() {
+      playSelectSound();
+      startQuiz();
+    }
+
+    /* -------------------------------------------------------------
+       10. APPLICATION INITIALIZATION
+       ------------------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPeriodicTable();
+      setupOrbitalGame();
+      setupMagneticGame();
+      startQuiz();
+      updateLanthanoidContractionView(57);
+    });
+  </script>
+</body>
+</html>
